@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+
+  mysql:
+    image: mysql:5.7
+    container_name: mysql1
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: ekki
+    ports: 
+      - 3307:3306
+    volumes:
+      - mysqldrive:/var/lib/mysql
+
+networks:
+  default:
+
+volumes:
+  mysqldrive:
