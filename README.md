@@ -1,5 +1,6 @@
 # Ambiente local para simulação de DeadLock
-[![Build Status](https://travis-ci.com/ismaelalvesgit/node-express-example.svg?branch=main)](https://travis-ci.com/ismaelalvesgit/node-express-example)
+[![Build Status](https://travis-ci.com/ismaelalvesgit/node-express-example.svg?branch=master)](https://travis-ci.com/ismaelalvesgit/node-express-example)
+
 Este projeto foi criado para motivos academicos para minha aprendizagem pessoal
 em lambda function utilizado o [Node.js](https://nodejs.org/en/) e [Express](https://expressjs.com/pt-br/).
 
