@@ -27,7 +27,7 @@ module.exports = {
             port: env.default.db.port,
             user: env.default.db.user,
             password: env.default.db.password,
-            database: 'test_ekki',
+            database: 'test_example',
             supportBigNumbers: true,
             bigNumberStrings: true,
             multipleStatements: true,

@@ -5,14 +5,14 @@ import execute from './test/utils/sql'
 
 beforeAll(async()=>{
     try {
-        await execute('create database test_ekki')
+        await execute('CREATE DATABASE IF NOT EXISTS test_example')
     } catch (error) {}
     await conn.migrate.up()
 })
 
 afterAll(async ()=>{
     try {
-        await execute('drop database test_ekki')
+        await execute('DROP DATABASE IF EXISTS test_example')
     } catch (error) {}
 })
 
