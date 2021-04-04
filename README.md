@@ -1,8 +1,8 @@
-# Ambiente local para simulação de DeadLock
+# Ambiente de EXEMPLO para express.js
 [![Build Status](https://travis-ci.com/ismaelalvesgit/node-express-example.svg?branch=master)](https://travis-ci.com/ismaelalvesgit/node-express-example)
 
 Este projeto foi criado para motivos academicos para minha aprendizagem pessoal
-em lambda function utilizado o [Node.js](https://nodejs.org/en/) e [Express](https://expressjs.com/pt-br/).
+utilizando [Node.js](https://nodejs.org/en/) e [Express](https://expressjs.com/pt-br/).
 
 Feramentas Utilizadas:
 * [NodeJs](https://nodejs.org/en/)
@@ -12,90 +12,26 @@ Feramentas Utilizadas:
 * [dotenv](https://www.npmjs.com/package/dotenv)
 * [bodyParser](https://www.npmjs.com/package/body-parser)
 * [cors](https://www.npmjs.com/package/cors)
+* [joi](https://www.npmjs.com/package/@hapi/joi)
+* [date-fns](https://www.npmjs.com/package/date-fns)
+* [date-fns-tz](https://www.npmjs.com/package/date-fns-tz)
+* [dotenv](https://www.npmjs.com/package/dotenv)
+* [helmet](https://www.npmjs.com/package/helmet)
+* [hide-powered-by](https://www.npmjs.com/package/hide-powered-by)
+* [http-status-codes](https://www.npmjs.com/package/http-status-codes)
+* [morgan](https://www.npmjs.com/package/morgan)
+* [swagger-jsdoc](https://www.npmjs.com/package/swagger-jsdoc)
+* [swagger-ui-express](https://www.npmjs.com/package/swagger-ui-express)
+* [uuid](https://www.npmjs.com/package/uuid)
+* [winston](https://www.npmjs.com/package/winston)
+* [winston-daily-rotate-file](https://www.npmjs.com/package/winston-daily-rotate-file)
+* [x-xss-protection](https://www.npmjs.com/package/x-xss-protection)
+* [yamljs](https://www.npmjs.com/package/yamljs)
 * [nodemon](https://nodemon.io/)
 
 ## Screenshots
-code view:
-```ts
-/**
- * @Author Ismael Alves <cearaismael1997@gmail.com>
- * @lastUpdate  16/03/2021
- */
-import dotenv from 'dotenv';
-dotenv.config()
-import express from 'express';
-import bodyParser from 'body-parser';
-import cors from 'cors';
-import knex from 'knex';
-import Chance from 'chance';
-import cluster from 'cluster';
-import { cpus } from 'os';
-const knexfile = require('./knexfile');
-const database = knex(knexfile);
-const chance = new Chance();
-const treads = cpus();
-const app = express();
-const port = process.env.SERVER_PORT || 8080;
-app.use(cors())
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended:true}))
-
-app.get('/', (req, res)=>{
-    database.transaction((trx)=>{
-        database.from('test')
-        .transacting(trx)
-        .first()
-        .then((get)=>{
-            if(get){
-                database.from('test')
-                .transacting(trx)
-                .where('id', get.id)
-                .forUpdate()
-                .update({
-                    value: chance.string()
-                }).then(()=>{
-                    trx.commit
-                    res.json(get)
-                }).catch((err)=> {
-                    console.log("ERRO - QUERY", JSON.stringify(err))
-                    res.json({err: err.code})
-                })
-            }else{
-                database.from('test')
-                .transacting(trx)
-                .insert({
-                    value: chance.string()
-                }).then((raw)=>{
-                    database.from('test')
-                    .transacting(trx)
-                    .where('id', raw[0])
-                    .forUpdate()
-                    .update({
-                        value: chance.string()
-                    }).then(()=>{
-                        trx.commit
-                        res.json(raw[0])
-                    }).catch((err)=> {
-                        console.log("ERRO - QUERY", JSON.stringify(err))
-                        res.json({err: err.code})
-                    })
-                })
-            }
-        })
-    })
-})
-
-if(cluster.isMaster){
-    treads.forEach(() => cluster.fork())
-    cluster.on('exit', ()=>{
-        cluster.fork()
-    })
-}else{
-    app.listen(port, ()=>{
-        console.log(`Server on http://localhost:${port}`)
-    });
-}
-```
+App view:
+![App UI](/app.png)
 
 ## Development
 
@@ -123,16 +59,25 @@ npm run migrate:up
 ``` sh
 npm run dev
 
-# verificar a url http://localhost:8080 ou http://localhost:${customPort}
+# verificar a url http://localhost:3000 ou http://localhost:${customPort}
 ```
 
 #### 5) Uso
-Faça 2 request na rota http://localhost:8080 ou http://localhost:${customPort} e verifique o seu 
+Faça 2 request na rota http://localhost:3000 ou http://localhost:${customPort} e verifique o seu 
 console de execução
 
-## Extra
-Estarei deixando uma arquivo chamdo `./DeadLock.jmx` para ser utilizado no [jmeter](https://jmeter.apache.org/)
-para testes de carga.
+
+## EXTRA
+#### 1) Base de dados
+Antes de iniciar qual ambiente sejá ele `LOCAL | DOCKERIZADO` deve ser criado uma base de dados no [mysql](https://www.mysql.com/) uma para o ambiente de DEV. Para mais informações veirifique `./src/env.js` para as variaveis de ambiente verifirifique `.env.example`
+
+Database Name | User Database | Password Database
+--------------|---------------|------------------
+example       |    `root`     | admin
+
+#### 2) Documentação
+O projeto possui uma documentação das rotas da API basta navegar para `http://localhost:3000/api-doc`, tambem deixei um arquivo localicado `./docker-compose.prod.yml` para facilitar os teste teste projeto.
+
 
 ## Contato
 

@@ -1,16 +1,17 @@
 import knex from 'knex'
 import env from './env'
+import knexfile from '../knexfile'
 
 let knexConn;
-switch (env.db.env) {
+switch (env.env) {
     case "development":
-        knexConn = require('../knexfile').local
+        knexConn = knexfile.local
         break;
     case "test":
-        knexConn = require('../knexfile').test
+        knexConn = knexfile.test
         break;
     default:
-        knexConn = require('../knexfile').local
+        knexConn = knexfile.local
         break;
 }
 

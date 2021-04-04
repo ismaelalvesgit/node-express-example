@@ -1,4 +1,4 @@
-import ApiError from '../utils/ApiError';
+import { ValidadeSchema } from '../utils/erro';
 import { StatusCodes } from 'http-status-codes'
 /**
  * 
@@ -14,7 +14,7 @@ export default function verifyHandlerMiddleware(schema){
         })
 
         if (validation.error) {
-            return next(new ApiError(StatusCodes.BAD_REQUEST, JSON.stringify(validation.error.details), true))
+            return next(new ValidadeSchema(StatusCodes.BAD_REQUEST, validation.error.details))
         }
 
         Object.assign(req, validation.value);
