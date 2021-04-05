@@ -1,7 +1,7 @@
 # Ambiente de EXEMPLO para express.js
 [![Build Status](https://travis-ci.com/ismaelalvesgit/node-express-example.svg?branch=master)](https://travis-ci.com/ismaelalvesgit/node-express-example)
 
-Este projeto foi criado para motivos academicos para minha aprendizagem pessoal
+Este projeto foi criado para motivos acadêmicos para minha aprendizagem pessoal
 utilizando [Node.js](https://nodejs.org/en/) e [Express](https://expressjs.com/pt-br/).
 
 Feramentas Utilizadas:
