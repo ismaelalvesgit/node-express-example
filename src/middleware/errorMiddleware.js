@@ -1,9 +1,11 @@
 import { ApiError, ValidadeSchema } from "../utils/erro";
 import { StatusCodes } from 'http-status-codes'
 import logger from '../logger'
+import elasticAgent from "../apm";
 
 /* eslint-disable no-unused-vars*/
 export default function errorHandler(error, req, res, next) {
+    elasticAgent.captureError(error)
     logger.error( `${req.id} ` + error.message)
     switch (error.constructor) {
         case ApiError: {

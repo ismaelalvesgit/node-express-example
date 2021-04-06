@@ -18,7 +18,7 @@ module.exports = {
         migrations: {
             tableName: 'migrations',
         },
-        // debug: true
+        debug: env.default.db.debug
     },
     test:{
         client: 'mysql2',
@@ -36,6 +36,6 @@ module.exports = {
         migrations: {
             tableName: 'migrations',
         },
-        // debug: true
+        debug: env.default.db.debug
     }
 };
