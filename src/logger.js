@@ -34,6 +34,10 @@ if(env.env === "production"){
     }));
 }
 
+if(env.env === "test"){
+    logger.transports.forEach((t)=> t.silent = true)
+}
+
 logger.stream = {
     write: (message)=>{
         logger.info(message)
