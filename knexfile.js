@@ -35,7 +35,6 @@ module.exports = {
         },
         migrations: {
             tableName: 'migrations',
-        },
-        debug: env.default.db.debug
+        }
     }
 };

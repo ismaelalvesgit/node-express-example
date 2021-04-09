@@ -69,15 +69,22 @@ console de execução
 
 ## EXTRA
 #### 1) Base de dados
-Antes de iniciar qual ambiente sejá ele `LOCAL | DOCKERIZADO` deve ser criado uma base de dados no [mysql](https://www.mysql.com/) uma para o ambiente de DEV. Para mais informações veirifique `./src/env.js` para as variaveis de ambiente verifirifique `.env.example`
+Antes de iniciar qual ambiente sejá ele `LOCAL | DOCKERIZADO` deve ser criado uma base de dados no [mysql](https://www.mysql.com/) uma para o 
+ambiente de DEV. Para mais informações veirifique `./src/env.js` para as variaveis de ambiente verifirifique `.env.example`
 
 Database Name | User Database | Password Database
 --------------|---------------|------------------
 example       |    `root`     | admin
 
 #### 2) Documentação
-O projeto possui uma documentação das rotas da API basta navegar para `http://localhost:3000/api-doc`, tambem deixei um arquivo localicado `./docker-compose.prod.yml` para facilitar os teste teste projeto.
+O projeto possui uma documentação das rotas da API basta navegar para `http://localhost:3000/api-doc`, tambem deixei um arquivo localicado 
+`./docker-compose.prod.yml` para facilitar os teste teste projeto.
 
+#### 3) Criar nova migrate
+Rode o comando
+```sh
+set NAME=teste && npm run migrate:create
+```
 
 ## Contato
 

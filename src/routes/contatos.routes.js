@@ -3,6 +3,7 @@ const router = express.Router();
 import verify from '../middleware/verifiyMiddleware'
 import { createContatoShema, updateContatoShema } from '../validations/contato'
 import { findOne, find, create, update, del } from '../controllers/contato.controller';
+import cachedMiddleware from '../middleware/cachedMiddleware';
 
 /**
  * GET - /contato/:id
@@ -19,7 +20,7 @@ router.route('/:id')
  * POST - /contato
  * */    
 router.route('/')
-    .get(find)
+    .get(cachedMiddleware(), find)
     .post(verify(createContatoShema), create)
 
 export default router;

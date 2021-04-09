@@ -5,7 +5,6 @@ import elasticAgent from "../apm";
 
 /* eslint-disable no-unused-vars*/
 export default function errorHandler(error, req, res, next) {
-    elasticAgent.captureError(error)
     logger.error( `${req.id} ` + error.message)
     switch (error.constructor) {
         case ApiError: {
@@ -31,6 +30,9 @@ export default function errorHandler(error, req, res, next) {
                     res.status(StatusCodes.BAD_REQUEST).json([{message: error.sqlMessage}])
                     break;
                 default:
+                    if(elasticAgent){
+                        elasticAgent.captureError(error)
+                    }
                     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json([{
                         message: `lamentamos isso ter ocorrido :(`
                     }])

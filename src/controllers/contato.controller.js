@@ -5,7 +5,7 @@ import { StatusCodes } from 'http-status-codes'
 
 const findOne = catchAsync(async (req, res) =>{
     const where = {id: req.params.id}
-    const [ data ] = await contatoService.findContato(where)
+    const [ data ] = await contatoService.findAllContact(where)
     if(!data){
         throw new ApiError(StatusCodes.NOT_FOUND, 'Contato não encontrado');
     }
@@ -14,13 +14,13 @@ const findOne = catchAsync(async (req, res) =>{
 
 const find = catchAsync(async (req, res) =>{
     const where = req.query
-    const data = await contatoService.findContato(where)
+    const data = await contatoService.findAllContact(where)
     res.json(data)
 })
 
 const create = catchAsync((req, res, next) =>{
     const data = req.body
-    contatoService.createContato(data).then(async(result)=>{
+    contatoService.createContact(data).then(async(result)=>{
         if(result.length){
             res.status(StatusCodes.CREATED).json(`Criado com sucesso ID ${result[0]}`)
         }else{
@@ -32,7 +32,7 @@ const create = catchAsync((req, res, next) =>{
 const update = catchAsync((req, res, next) =>{
     const data = req.body
     const id = req.params.id
-    contatoService.updateContato({id}, data).then((result)=>{
+    contatoService.updateContact({id}, data).then((result)=>{
         if(result != 1){
             throw new ApiError(StatusCodes.NOT_FOUND, 'Contato não encontrado');
         }
@@ -42,7 +42,7 @@ const update = catchAsync((req, res, next) =>{
 
 const del = catchAsync(async (req, res, next) =>{
     const id = req.params.id
-    contatoService.deleteContato({id}).then((result)=>{
+    contatoService.delContact({id}).then((result)=>{
         if(result != 1){
             throw new ApiError(StatusCodes.NOT_FOUND, 'Contato não encontrado');
         }

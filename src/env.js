@@ -15,7 +15,7 @@ export default {
         user: process.env.DB_USERNAME,
         password: process.env.DB_PASSWORD,
         database: process.env.DB_DATABASE,
-        debug: Boolean(process.env.DB_DEBUG || 'false')
+        debug: process.env.DB_DEBUG || 'false'
     },
     amqp:{
         active: Boolean(process.env.AMQP_ACTIVE || 'false'),
@@ -29,6 +29,7 @@ export default {
     redis:{
         host: process.env.REDIS_HOST,
         port: parseInt(process.env.REDIS_PORT || '6379'),
+        prefix: process.env.REDIS_PREFIX || "example" 
     },
     apm:{
         serverUrl: process.env.APM_SERVER_URL,

@@ -20,4 +20,4 @@ script:
 before_install:
 - mysql -e 'CREATE DATABASE IF NOT EXISTS test_example;'
 
-after_success: npm run coverage:coveralls
+after_success: npm run test:coverage:coveralls
