@@ -1,5 +1,5 @@
-import env from '../env';
-import { getCache, setCache } from '../utils/cache';
+import env from "../env";
+import { getCache, setCache } from "../utils/cache";
 
 /**
  * @param {number} timeExp
@@ -8,20 +8,20 @@ import { getCache, setCache } from '../utils/cache';
 export default function cachedMiddleware(timeExp = 20){
     return async (req, res, next)=>{
         if(env.redis.host){
-            const key = req.originalUrl || req.url 
-            const data = await getCache(key)
+            const key = req.originalUrl || req.url; 
+            const data = await getCache(key);
             if(data){
-                res.json(data)
+                res.json(data);
             }else{
-                res.sendResponse = res.send
+                res.sendResponse = res.send;
                 res.send = (body) => {
-                    setCache(key, body, timeExp)
-                    res.sendResponse(body)
-                }
-                return next()
+                    setCache(key, body, timeExp);
+                    res.sendResponse(body);
+                };
+                return next();
             }
         }else{
-            return next()
+            return next();
         }
-    }
+    };
 }

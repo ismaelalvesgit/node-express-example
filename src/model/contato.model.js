@@ -1,6 +1,6 @@
-import knex from '../db'
-import transacting from '../utils/transacting'
-const TABLE_NAME = 'contato'
+import knex from "../db";
+import transacting from "../utils/transacting";
+const TABLE_NAME = "contato";
 
 /**
  * @typedef Contato
@@ -19,9 +19,9 @@ const TABLE_NAME = 'contato'
  */
 const findAllContact = (where, trx)=>{
     const query = knex(TABLE_NAME)
-        .where(where)
-    return transacting(query, trx)
-}
+        .where(where);
+    return transacting(query, trx);
+};
 
 /**
  * @param {Contato} data 
@@ -30,9 +30,9 @@ const findAllContact = (where, trx)=>{
  */
 const createContact = (data, trx)=>{
     const query = knex(TABLE_NAME)
-        .insert(data)
-    return transacting(query, trx)
-}
+        .insert(data);
+    return transacting(query, trx);
+};
 
 /**
  * @param {Contato} where 
@@ -44,9 +44,9 @@ const updateContact = (where, data, trx)=>{
     const query = knex(TABLE_NAME)
         .where(where)
         .update(data)
-        .forUpdate()
-    return transacting(query, trx)
-}
+        .forUpdate();
+    return transacting(query, trx);
+};
 
 /**
  * @param {Contato} where 
@@ -56,13 +56,13 @@ const updateContact = (where, data, trx)=>{
 const delContact = (where, trx)=>{
     const query = knex(TABLE_NAME)
         .where(where)
-        .del()
-    return transacting(query, trx)
-}
+        .del();
+    return transacting(query, trx);
+};
 
 export {
     findAllContact,
     createContact,
     updateContact,
     delContact
-}
+};

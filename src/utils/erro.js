@@ -8,12 +8,12 @@ class CustomError extends Error{
 
 export class ApiError extends CustomError {
     constructor(statusCode, message){
-        super(statusCode, message)
+        super(statusCode, message);
     }
 }
 
 export class ValidadeSchema extends CustomError{
     constructor(statusCode, message){
-        super(statusCode, JSON.stringify(message))
+        super(statusCode, JSON.stringify(message));
     }
 }

@@ -1,25 +1,31 @@
 language: node_js
+
 node_js:
   - '14'
+  
 cache: npm
+
 services:
   - mysql
 
 branches:
   only:
     - master
+
 env:
   global:
     - DB_USERNAME=root
     - DB_PASSWORD=
     - DB_PORT=3306
 
-script:
-  - npm i
-  - npm run lint
-  - npm test
-
 before_install:
 - mysql -e 'CREATE DATABASE IF NOT EXISTS test_example;'
+
+install:
+- npm i
+
+script:
+  - npm run lint
+  - npm test
 
 after_success: npm run test:coverage:coveralls

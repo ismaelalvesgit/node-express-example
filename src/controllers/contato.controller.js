@@ -1,54 +1,54 @@
-import { contatoService } from '../services'
-import { ApiError } from '../utils/erro';
-import catchAsync from '../utils/catchAsync'
-import { StatusCodes } from 'http-status-codes'
+import { contatoService } from "../services";
+import { ApiError } from "../utils/erro";
+import catchAsync from "../utils/catchAsync";
+import { StatusCodes } from "http-status-codes";
 
 const findOne = catchAsync(async (req, res) =>{
-    const where = {id: req.params.id}
-    const [ data ] = await contatoService.findAllContact(where)
+    const where = {id: req.params.id};
+    const [ data ] = await contatoService.findAllContact(where);
     if(!data){
-        throw new ApiError(StatusCodes.NOT_FOUND, 'Contato não encontrado');
+        throw new ApiError(StatusCodes.NOT_FOUND, "Contato não encontrado");
     }
-    res.json(data)
-})
+    res.json(data);
+});
 
 const find = catchAsync(async (req, res) =>{
-    const where = req.query
-    const data = await contatoService.findAllContact(where)
-    res.json(data)
-})
+    const where = req.query;
+    const data = await contatoService.findAllContact(where);
+    res.json(data);
+});
 
 const create = catchAsync((req, res, next) =>{
-    const data = req.body
+    const data = req.body;
     contatoService.createContact(data).then(async(result)=>{
         if(result.length){
-            res.status(StatusCodes.CREATED).json(`Criado com sucesso ID ${result[0]}`)
+            res.status(StatusCodes.CREATED).json(`Criado com sucesso ID ${result[0]}`);
         }else{
-            throw new ApiError(StatusCodes.BAD_REQUEST, 'Fallha ao criar contato');
+            throw new ApiError(StatusCodes.BAD_REQUEST, "Fallha ao criar contato");
         }
-    }).catch(next)
-})
+    }).catch(next);
+});
 
 const update = catchAsync((req, res, next) =>{
-    const data = req.body
-    const id = req.params.id
+    const data = req.body;
+    const id = req.params.id;
     contatoService.updateContact({id}, data).then((result)=>{
         if(result != 1){
-            throw new ApiError(StatusCodes.NOT_FOUND, 'Contato não encontrado');
+            throw new ApiError(StatusCodes.NOT_FOUND, "Contato não encontrado");
         }
-        res.status(StatusCodes.OK).json(`ID ${id} Atualizado com sucesso`)
-    }).catch(next)
-})
+        res.status(StatusCodes.OK).json(`ID ${id} Atualizado com sucesso`);
+    }).catch(next);
+});
 
 const del = catchAsync(async (req, res, next) =>{
-    const id = req.params.id
+    const id = req.params.id;
     contatoService.delContact({id}).then((result)=>{
         if(result != 1){
-            throw new ApiError(StatusCodes.NOT_FOUND, 'Contato não encontrado');
+            throw new ApiError(StatusCodes.NOT_FOUND, "Contato não encontrado");
         }
-        res.sendStatus(StatusCodes.NO_CONTENT)
-    }).catch(next)
-})
+        res.sendStatus(StatusCodes.NO_CONTENT);
+    }).catch(next);
+});
 
 export {
     findOne,
@@ -56,4 +56,4 @@ export {
     create,
     update,
     del
-}
+};

@@ -9,8 +9,8 @@ import redisClient from "../redisClient";
  * @returns {Promise<"OK">}
  */
 const setCache = (key, value, timeExp)=>{
-    return redisClient.set(key, value, "EX", timeExp)
-}
+    return redisClient.set(key, value, "EX", timeExp);
+};
 
 /**
  * 
@@ -18,9 +18,9 @@ const setCache = (key, value, timeExp)=>{
  * @returns {object}
  */
 const getCache = async (key)=>{
-    const data = await redisClient.get(key)
-    return data ? JSON.parse(data) : null
-}
+    const data = await redisClient.get(key);
+    return data ? JSON.parse(data) : null;
+};
 
 /**
  * 
@@ -30,10 +30,10 @@ const getCache = async (key)=>{
  */
 const delCache = (req, key)=>{
     if(req){
-        return redisClient.del(req.originalUrl || req.url)
+        return redisClient.del(req.originalUrl || req.url);
     }  
-    return redisClient.del(key)
-}
+    return redisClient.del(key);
+};
 
 /**
  * 
@@ -42,14 +42,14 @@ const delCache = (req, key)=>{
  */
 const delPrefixCache = async (prefix)=>{
     const keys = (await redisClient.keys(`${env.redis.prefix}${prefix}:*`)).map((key)=>{
-        key.replace(env.redis.prefix, "")
-    })
-    return keys.length > 0 ? redisClient.del(keys) : null
-}
+        key.replace(env.redis.prefix, "");
+    });
+    return keys.length > 0 ? redisClient.del(keys) : null;
+};
 
 export {
     setCache,
     getCache,
     delCache,
     delPrefixCache
-}
+};

@@ -1,9 +1,9 @@
 
 const transacting = (query, trx)=>{
     if(trx){
-        query.transacting(trx)
+        query.transacting(trx);
     }
-    return query
-}
+    return query;
+};
 
-export default transacting
+export default transacting;

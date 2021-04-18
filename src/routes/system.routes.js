@@ -1,11 +1,11 @@
-import express from 'express'
+import express from "express";
 const router = express.Router();
-import { status } from '../controllers/system.controller';
+import { status } from "../controllers/system.controller";
 
 /**
  * GET - /system/healthcheck
  * */    
-router.route('/healthcheck')
-    .get(status)
+router.route("/healthcheck")
+    .get(status);
 
 export default router;

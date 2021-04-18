@@ -1,5 +1,5 @@
-import { ValidadeSchema } from '../utils/erro';
-import { StatusCodes } from 'http-status-codes'
+import { ValidadeSchema } from "../utils/erro";
+import { StatusCodes } from "http-status-codes";
 /**
  * 
 *  @param {import('@hapi/joi').AnySchema} schema 
@@ -11,13 +11,13 @@ export default function verifyHandlerMiddleware(schema){
             abortEarly: false,
             stripUnknown: true,
             allowUnknown: true
-        })
+        });
 
         if (validation.error) {
-            return next(new ValidadeSchema(StatusCodes.BAD_REQUEST, validation.error.details))
+            return next(new ValidadeSchema(StatusCodes.BAD_REQUEST, validation.error.details));
         }
 
         Object.assign(req, validation.value);
         return next();
-    }
+    };
 }

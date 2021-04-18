@@ -1,6 +1,6 @@
-import Redis from 'ioredis'
-import env from './env'
-import logger from './logger';
+import Redis from "ioredis";
+import env from "./env";
+import logger from "./logger";
 
 /** @type {import('ioredis').Redis} */
 let redisClient;
@@ -9,10 +9,10 @@ if(env.redis.host){
         host: env.redis.host,
         port: env.redis.port,
         keyPrefix: env.redis.prefix
-    })
-    logger.info('Registered service redis is ON');
+    });
+    logger.info("Registered service redis is ON");
 }else{
-    logger.info('Not registered service redis');
+    logger.info("Not registered service redis");
 }
 
 export default redisClient;

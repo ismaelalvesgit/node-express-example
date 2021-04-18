@@ -18,7 +18,7 @@
         "test:unit": "cross-env NODE_ENV=test jest jest --testPathPattern=test/unit --forceExit --detectOpenHandles --maxWorkers=1 --testTimeout=50000",
         "test:integration": "cross-env NODE_ENV=test jest jest --testPathPattern=test/integration --forceExit --detectOpenHandles --maxWorkers=1 --testTimeout=50000",
         "test:coverage": "cross-env NODE_ENV=test jest --coverage",
-        "test:coverage:coveralls": "cross-env NODE_ENV=test jest jest -i --coverage --coverageReporters=text-lcov | coveralls",
+        "test:coverage:coveralls": "cross-env NODE_ENV=test jest --coverage && cat ./coverage/lcov.info | coveralls",
         "migrate:create": "knex migrate:make --env local %NAME%",
         "migrate:up": "knex migrate:latest --env local",
         "migrate:down": "knex migrate:down --env local"
@@ -95,6 +95,7 @@
     "devDependencies": {
         "@babel/cli": "^7.13.14",
         "@babel/core": "^7.13.15",
+        "@babel/eslint-parser": "^7.13.14",
         "@babel/helper-module-transforms": "^7.13.14",
         "@babel/node": "^7.13.13",
         "@babel/plugin-proposal-class-properties": "^7.13.0",
