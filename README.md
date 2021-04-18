@@ -27,6 +27,8 @@ Feramentas Utilizadas:
 * [winston-daily-rotate-file](https://www.npmjs.com/package/winston-daily-rotate-file)
 * [x-xss-protection](https://www.npmjs.com/package/x-xss-protection)
 * [yamljs](https://www.npmjs.com/package/yamljs)
+* [ioredis](https://www.npmjs.com/package/ioredis)
+* [socket.io](https://socket.io/)
 * [nodemon](https://nodemon.io/)
 
 ## Screenshots

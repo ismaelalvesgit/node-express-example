@@ -1,6 +1,6 @@
 import request from 'supertest'
 import { StatusCodes } from 'http-status-codes'
-import app from '../../src/app'
+import { app } from '../../src/app'
 import { Chance } from 'chance'
 import knex from '../../src/db'
 

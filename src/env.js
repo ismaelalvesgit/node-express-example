@@ -4,8 +4,15 @@ dotenv.config()
 export default {
     env: process.env.NODE_ENV || "development",
     timezone: process.env.TIME_ZONE || "America/Fortaleza",
+    security:{
+        ssl: {
+            cert: process.env.SSL_CERT,
+            key: process.env.SSL_CERT,
+        }
+    },
     server:{
-        active: Boolean(process.env.SERVER_ACTIVE || 'true'),
+        active: process.env.SERVER_ACTIVE === "true",
+        ssl: process.env.SERVER_SSL == "true",
         port: parseInt(process.env.SERVER_PORT || '3000'),
         bodyLimit: process.env.SERVER_BODY_LIMIT || '500kb'
     },
@@ -18,7 +25,7 @@ export default {
         debug: process.env.DB_DEBUG || 'false'
     },
     amqp:{
-        active: Boolean(process.env.AMQP_ACTIVE || 'false'),
+        active: process.env.AMQP_ACTIVE === "true",
         protocol: process.env.AMQP_PROTOCOL,
         host: process.env.AMQP_HOSTNAME,
         port: parseInt(process.env.AMQP_PORT || '5672'),
