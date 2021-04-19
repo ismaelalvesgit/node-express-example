@@ -2,6 +2,7 @@ import { contatoService } from "../services";
 import { ApiError } from "../utils/erro";
 import catchAsync from "../utils/catchAsync";
 import { StatusCodes } from "http-status-codes";
+import * as socket from "../socket/services";
 
 const findOne = catchAsync(async (req, res) =>{
     const where = {id: req.params.id};
@@ -22,6 +23,7 @@ const create = catchAsync((req, res, next) =>{
     const data = req.body;
     contatoService.createContact(data).then(async(result)=>{
         if(result.length){
+            socket.contatoService.createContact(result[0]);
             res.status(StatusCodes.CREATED).json(`Criado com sucesso ID ${result[0]}`);
         }else{
             throw new ApiError(StatusCodes.BAD_REQUEST, "Fallha ao criar contato");

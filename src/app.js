@@ -18,6 +18,7 @@ import uuidMiddleware from "./middleware/uuidMiddleware";
 import systemRouter from "./routes/system.routes";
 import contatoRouter from "./routes/contatos.routes";
 import env from "./env";
+import path from "path";
 
 /** Instances */
 dotenv.config();
@@ -46,7 +47,7 @@ app.set("view engine", "ejs");
 app.set("views", "./src/views");
 
 /** Assets */
-app.use("/static", express.static("./src/public"));
+app.use("/static", express.static(path.join(__dirname, "/public")));
 
 /** Logger */
 morgan.token("id", (req)=>{
@@ -70,8 +71,5 @@ app.get("/", (req, res)=>{
 app.use("/api-doc", swagger.serve, swagger.setup(swaggerDocument));
 app.use("/system", systemRouter);
 app.use("/contato", contatoRouter);
-app.get("*", (req, res)=>{
-    res.render("index");
-});
 
 export { app, server };

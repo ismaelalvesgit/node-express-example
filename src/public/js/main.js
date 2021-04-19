@@ -2,10 +2,12 @@
 var $ = jQuery;
 var animationTime = 20,
     days = 7;
- 
 $(document).ready(function(){
     var socket = io()
     socket.emit('/contato', 'new client connetion')
+    socket.on('/new-contato', (newContact)=>{
+        console.log(newContact)
+    })
 
     // timer arguments: 
     //   #1 - time of animation in mileseconds, 

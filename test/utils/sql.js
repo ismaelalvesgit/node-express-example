@@ -1,5 +1,5 @@
-import mysql from 'mysql2'
-import env from '../../src/env'
+import mysql from "mysql2";
+import env from "../../src/env";
 
 const execute = (sql)=> {
     return new Promise((resolve, reject)=>{
@@ -8,15 +8,15 @@ const execute = (sql)=> {
             user: env.db.user,
             password: env.db.password,
             port: env.db.port,
-        })
+        });
     
-        query.execute(sql, (err, results, fields)=>{
+        query.execute(sql, (err, results)=>{
             if(err){
-                reject(err)
+                reject(err);
             }
-            resolve(results)
-        })
-    })
-}
+            resolve(results);
+        });
+    });
+};
 
-export default execute
+export default execute;
