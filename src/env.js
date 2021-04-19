@@ -22,7 +22,7 @@ export default {
         user: process.env.DB_USERNAME,
         password: process.env.DB_PASSWORD,
         database: process.env.DB_DATABASE,
-        debug: process.env.DB_DEBUG || "false"
+        debug: process.env.DB_DEBUG === "true"
     },
     amqp:{
         active: process.env.AMQP_ACTIVE === "true",

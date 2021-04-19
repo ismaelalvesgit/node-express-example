@@ -19,6 +19,8 @@ import systemRouter from "./routes/system.routes";
 import contatoRouter from "./routes/contatos.routes";
 import env from "./env";
 import path from "path";
+import { requestCounters, responseCounters, injectMetricsRoute } from "./utils/metric";
+import responseTime from "response-time";
 
 /** Instances */
 dotenv.config();
@@ -41,6 +43,9 @@ app.use(hsts({
 app.use(xssFilter());
 app.use(hidePoweredBy());
 app.use(uuidMiddleware);
+app.use(responseCounters);
+app.use(requestCounters);
+app.use(responseTime());
 
 /** Engine View */
 app.set("view engine", "ejs");
@@ -71,5 +76,8 @@ app.get("/", (req, res)=>{
 app.use("/api-doc", swagger.serve, swagger.setup(swaggerDocument));
 app.use("/system", systemRouter);
 app.use("/contato", contatoRouter);
+
+/** Metric Endpoint */
+injectMetricsRoute(app);
 
 export { app, server };
