@@ -30,6 +30,7 @@ Feramentas Utilizadas:
 * [ioredis](https://www.npmjs.com/package/ioredis)
 * [amqplib](https://www.npmjs.com/package/amqplib)
 * [ramda](https://www.npmjs.com/package/ramda)
+* [i18n](https://www.npmjs.com/package/i18n)
 * [socket.io](https://socket.io/)
 * [nodemon](https://nodemon.io/)
 

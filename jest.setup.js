@@ -2,6 +2,13 @@ import knex from 'knex'
 import knexFile from './knexfile'
 const conn = knex(knexFile.test)
 import execute from './test/utils/sql'
+jest.mock('./src/i18n', ()=>{
+    return {
+        init: (req, res, next)=>{
+            next()
+        }
+    }
+})
 
 beforeAll(async()=>{
     try {

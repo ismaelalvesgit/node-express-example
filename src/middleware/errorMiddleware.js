@@ -3,6 +3,40 @@ import { StatusCodes } from "http-status-codes";
 import logger from "../logger";
 import elasticAgent from "../apm";
 
+/**
+ * @typedef ErrorConfig
+ * @type {Object}
+ * @property {typeof CodedError} class
+ * @property {String} i18n
+ */
+
+/**
+ * @type {ErrorConfig[]}
+ */
+const errorsConfigs = [
+    { class: ApiError, i18n: "error.apiError" },
+    { class: ValidadeSchema, i18n: "error.validadeSchema" },
+    { class: AmqpError, i18n: "error.amqpError"},
+];
+
+/**
+ * @param {Error} error
+ */
+const _getErrorConfig = error => errorsConfigs.find(errorConfig => error instanceof errorConfig.class);
+
+/**
+ * @param {import('express').Request} req
+ * @param {Error} error
+ */
+/* eslint-disable no-unused-vars*/
+const _loadErrorMessage = (req, error) => {
+    const errorConfig = _getErrorConfig(error);
+    if (errorConfig) {
+      const errorWithMessage = error;
+      errorWithMessage.message = req.__(errorConfig.i18n);
+    }
+};
+
 /* eslint-disable no-unused-vars*/
 export default function errorHandler(error, req, res, next) {
     logger.warn(`${req.id} ${error.message}`);

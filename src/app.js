@@ -22,6 +22,7 @@ import env from "./env";
 import path from "path";
 import { requestCounters, responseCounters, injectMetricsRoute } from "./utils/metric";
 import responseTime from "response-time";
+import i18n from "./i18n";
 
 /** Instances */
 dotenv.config();
@@ -47,6 +48,7 @@ app.use(uuidMiddleware);
 app.use(responseCounters);
 app.use(requestCounters);
 app.use(responseTime());
+app.use(i18n.init);
 
 /** Engine View */
 app.set("view engine", "ejs");
