@@ -30,7 +30,8 @@ services:
     ports:
       - 3002:80
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
 
   mysql:
     image: mysql:5.7
@@ -45,6 +46,10 @@ services:
       - mysqldrive:/var/lib/mysql
       - //etc/localtime:/etc/localtime:ro # Windows WSL
       - //etc/timezone:/etc/timezone:ro # Windows WSL
+    healthcheck:
+      test: "/etc/init.d/mysql status"
+      interval: 1s
+      retries: 120
 
   redis:
     image: redis
@@ -54,6 +59,11 @@ services:
       - 6379:6379
     volumes:
       - redisdrive:/data/redis
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 1s
+      timeout: 3s
+      retries: 30
 
   rabbitmq:
     image: rabbitmq:3.8-management-alpine
@@ -70,6 +80,11 @@ services:
       - rabbitmqdrive:/var/lib/rabbitmq/mnesia
       - //etc/localtime:/etc/localtime:ro # Windows WSL
       - //etc/timezone:/etc/timezone:ro # Windows WSL
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 30s
+      timeout: 30s
+      retries: 3
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTIC_VERSION}
@@ -128,7 +143,7 @@ services:
     depends_on:
       elasticsearch:
         condition: service_healthy
-
+  
   filebeat:
     image: docker.elastic.co/beats/filebeat:${ELASTIC_VERSION}
     container_name: filebeat

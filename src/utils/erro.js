@@ -1,5 +1,5 @@
 class CustomError extends Error{
-    constructor(statusCode, message){
+    constructor(statusCode, message, ){
         super(message || statusCode);
         this.statusCode = statusCode;
         Error.captureStackTrace(this, this.constructor);
@@ -9,6 +9,12 @@ class CustomError extends Error{
 export class ApiError extends CustomError {
     constructor(statusCode, message){
         super(statusCode, message);
+    }
+}
+
+export class AmqpError extends CustomError {
+    constructor(message){
+        super(null, message);
     }
 }
 

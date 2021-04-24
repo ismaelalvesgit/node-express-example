@@ -1,0 +1,28 @@
+import { getChannel } from "../amqpClient";
+import logger from "../logger";
+import { ContactConsumer } from "./consumers/contato.consumer";
+import onConsume from "./middlewares/onConsume";
+
+const _connectConsumers = async ()=>{
+    const channel = await getChannel();
+    const consumers = [
+        new ContactConsumer(onConsume)
+    ];
+
+    consumers.forEach((consumer)=>{
+        consumer.assertQueue(channel);
+    });
+};
+
+const connect = async ()=>{
+    try {
+        await _connectConsumers();
+        logger.info("Registered service AMQP is ON");
+    } catch (error) {
+        logger.info("Not registered service AMQP");
+    }
+};
+
+export {
+    connect
+};

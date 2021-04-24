@@ -43,7 +43,7 @@ const requestCounters = (req, res, next)=>{
 
 const startCollection = ()=>{
     collectDefaultMetrics();
-    logger.info("Registered service collect metrics is ON");
+    logger.info("Registered service collect METRICS is ON");
 };
 
 /**

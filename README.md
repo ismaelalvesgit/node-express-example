@@ -28,6 +28,8 @@ Feramentas Utilizadas:
 * [x-xss-protection](https://www.npmjs.com/package/x-xss-protection)
 * [yamljs](https://www.npmjs.com/package/yamljs)
 * [ioredis](https://www.npmjs.com/package/ioredis)
+* [amqplib](https://www.npmjs.com/package/amqplib)
+* [ramda](https://www.npmjs.com/package/ramda)
 * [socket.io](https://socket.io/)
 * [nodemon](https://nodemon.io/)
 

@@ -3,7 +3,7 @@ import axios from "axios";
 import env from "../env";
 import logger from "../logger";
 
-logger.info("Registered service job batch is ON");
+logger.info("Registered service JOB batch is ON");
 
 /** Auto healthcheck em cada 10 Minutos */
 new CronJob("*/10 * * * *", async ()=>{

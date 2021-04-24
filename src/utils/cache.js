@@ -1,5 +1,5 @@
 import env from "../env";
-import redisClient from "../redisClient";
+import redisClient from "../redis";
 
 /**
  * 

@@ -22,24 +22,17 @@ export default function errorHandler(error, req, res, next) {
             break;
         }
         default: {
-            switch (error.code) {
-                case "ER_DUP_ENTRY":
-                    res.status(StatusCodes.BAD_REQUEST).json([{message: error.sqlMessage}]);
-                    break;
-                case "ER_BAD_FIELD_ERROR":
-                    res.status(StatusCodes.BAD_REQUEST).json([{message: error.sqlMessage}]);
-                    break;
-                default:
-                    if(elasticAgent){
-                        elasticAgent.captureError(error);
-                    }
-                    logger.error(`${req.id} ${error.message}`);
-                    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json([{
-                        message: `Entre em contato com o desenvolvedor passe eu seu ID ${req.id}, lamentamos isso ter ocorrido 😞`
-                    }]);
-                    break;
+            if(error.code){
+                res.status(StatusCodes.BAD_REQUEST).json([{message: error.sqlMessage}]);
+            }else{
+                if(elasticAgent){
+                    elasticAgent.captureError(error);
+                }
+                logger.error(`${req.id} ${error.message}`);
+                res.status(StatusCodes.INTERNAL_SERVER_ERROR).json([{
+                    message: `Entre em contato com o desenvolvedor passe eu seu ID ${req.id}, lamentamos isso ter ocorrido 😞`
+                }]);
             }
-            break;
         }
     }
 }

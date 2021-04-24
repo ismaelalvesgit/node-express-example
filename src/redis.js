@@ -10,9 +10,9 @@ if(env.redis.host){
         port: env.redis.port,
         keyPrefix: env.redis.prefix
     });
-    logger.info("Registered service redis is ON");
+    logger.info("Registered service REDIS is ON");
 }else{
-    logger.info("Not registered service redis");
+    logger.info("Not registered service REDIS");
 }
 
 export default redisClient;

@@ -11,9 +11,9 @@ if(env.server.active){
             origin: "*",
         }
     });
-    logger.info("Registered service socket is ON");
+    logger.info("Registered service SOCKET.IO is ON");
 }else{
-    logger.info("Not registered service socket");
+    logger.info("Not registered service SOCKET.IO");
 }
 
 export default io;
