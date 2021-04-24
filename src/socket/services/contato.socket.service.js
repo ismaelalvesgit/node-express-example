@@ -6,13 +6,9 @@ const BASE = "contato";
  * 
  * @param {number} id 
  */
-const createContact = async (id)=>{
-    if(id && io){
+ export const createContact = async (id)=>{
+    if(id){
         const newContact = await model.findAllContact({id});
         io.emit(`new-${BASE}`, newContact);
     }
-};
-
-export {
-    createContact
 };

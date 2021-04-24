@@ -17,7 +17,7 @@ const TABLE_NAME = "contato";
  * @param {import('knex').Knex.Transaction} trx 
  * @returns {import('knex').Knex.QueryBuilder}
  */
-const findAllContact = (where, trx)=>{
+ export const findAllContact = (where, trx)=>{
     const query = knex(TABLE_NAME)
         .where(where);
     return transacting(query, trx);
@@ -28,7 +28,7 @@ const findAllContact = (where, trx)=>{
  * @param {import('knex').Knex.Transaction} trx 
  * @returns {import('knex').Knex.QueryBuilder}
  */
-const createContact = (data, trx)=>{
+ export const createContact = (data, trx)=>{
     const query = knex(TABLE_NAME)
         .insert(data);
     return transacting(query, trx);
@@ -40,7 +40,7 @@ const createContact = (data, trx)=>{
  * @param {import('knex').Knex.Transaction} trx 
  * @returns {import('knex').Knex.QueryBuilder}
  */
-const updateContact = (where, data, trx)=>{
+ export const updateContact = (where, data, trx)=>{
     const query = knex(TABLE_NAME)
         .where(where)
         .update(data)
@@ -53,16 +53,9 @@ const updateContact = (where, data, trx)=>{
  * @param {import('knex').Knex.Transaction} trx 
  * @returns {import('knex').Knex.QueryBuilder}
  */
-const delContact = (where, trx)=>{
+export const delContact = (where, trx)=>{
     const query = knex(TABLE_NAME)
         .where(where)
         .del();
     return transacting(query, trx);
-};
-
-export {
-    findAllContact,
-    createContact,
-    updateContact,
-    delContact
 };

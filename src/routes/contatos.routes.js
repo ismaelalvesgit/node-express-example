@@ -2,7 +2,7 @@ import express from "express";
 const router = express.Router();
 import verify from "../middleware/verifiyMiddleware";
 import { createContatoShema, updateContatoShema } from "../validations/contato";
-import { findOne, find, create, update, del } from "../controllers/contato.controller";
+import { findOne, find, create, update, del, createByAmqp } from "../controllers/contato.controller";
 import cachedMiddleware from "../middleware/cachedMiddleware";
 
 /**
@@ -22,5 +22,12 @@ router.route("/:id")
 router.route("/")
     .get(cachedMiddleware(), find)
     .post(verify(createContatoShema), create);
+
+
+/**
+ * POST - /contato/amqp
+ * */    
+router.route("/amqp")
+    .post(verify(createContatoShema), createByAmqp);
 
 export default router;

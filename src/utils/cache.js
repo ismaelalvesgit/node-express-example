@@ -8,7 +8,7 @@ import redisClient from "../redis";
  * @param {number} timeExp 
  * @returns {Promise<"OK">}
  */
-const setCache = (key, value, timeExp)=>{
+ export const setCache = (key, value, timeExp)=>{
     return redisClient.set(key, value, "EX", timeExp);
 };
 
@@ -17,7 +17,7 @@ const setCache = (key, value, timeExp)=>{
  * @param {import('ioredis').KeyType} key 
  * @returns {object}
  */
-const getCache = async (key)=>{
+export const getCache = async (key)=>{
     const data = await redisClient.get(key);
     return data ? JSON.parse(data) : null;
 };
@@ -28,7 +28,7 @@ const getCache = async (key)=>{
  * @param {import('ioredis').KeyType} key 
  * @returns {Promise<number>}
  */
-const delCache = (req, key)=>{
+ export const delCache = (req, key)=>{
     if(req){
         return redisClient.del(req.originalUrl || req.url);
     }  
@@ -40,16 +40,9 @@ const delCache = (req, key)=>{
  * @param {string} prefix 
  * @returns {void}
  */
-const delPrefixCache = async (prefix)=>{
+ export const delPrefixCache = async (prefix)=>{
     const keys = (await redisClient.keys(`${env.redis.prefix}${prefix}:*`)).map((key)=>{
         key.replace(env.redis.prefix, "");
     });
     return keys.length > 0 ? redisClient.del(keys) : null;
-};
-
-export {
-    setCache,
-    getCache,
-    delCache,
-    delPrefixCache
 };

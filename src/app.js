@@ -1,3 +1,4 @@
+import ("./socketClient");
 import dotenv from "dotenv";
 import express from "express";
 import http from "http";
@@ -63,11 +64,9 @@ morgan.token("date", function() {
 });
 morgan.token("body", (req) => JSON.stringify(req.body));
 
-if(env.env !== "test"){
-    app.use(morgan(":id :remote-addr - :remote-user [:date[clf]] \":method :url HTTP/:http-version\" :status :res[content-length] :body \":referrer\" \":user-agent\"", {
-        stream: logger.stream
-    }));
-}
+app.use(morgan(":id :remote-addr - :remote-user [:date[clf]] \":method :url HTTP/:http-version\" :status :res[content-length] :body \":referrer\" \":user-agent\"", {
+    stream: logger.stream
+}));
 
 /** Routers */
 app.get("/", (req, res)=>{

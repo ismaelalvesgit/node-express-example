@@ -1,10 +1,11 @@
 import { contatoService } from "../services";
-import { ApiError } from "../utils/erro";
+import { AmqpError, ApiError } from "../utils/erro";
 import catchAsync from "../utils/catchAsync";
 import { StatusCodes } from "http-status-codes";
 import * as socket from "../socket/services";
+import { publish } from "../amqpClient";
 
-const findOne = catchAsync(async (req, res) =>{
+export const findOne = catchAsync(async (req, res) =>{
     const where = {id: req.params.id};
     const [ data ] = await contatoService.findAllContact(where);
     if(!data){
@@ -13,13 +14,13 @@ const findOne = catchAsync(async (req, res) =>{
     res.json(data);
 });
 
-const find = catchAsync(async (req, res) =>{
+export const find = catchAsync(async (req, res) =>{
     const where = req.query;
     const data = await contatoService.findAllContact(where);
     res.json(data);
 });
 
-const create = catchAsync((req, res, next) =>{
+export const create = catchAsync((req, res, next) =>{
     const data = req.body;
     contatoService.createContact(data).then(async(result)=>{
         if(result.length){
@@ -31,7 +32,22 @@ const create = catchAsync((req, res, next) =>{
     }).catch(next);
 });
 
-const update = catchAsync((req, res, next) =>{
+export const createByAmqp = catchAsync(async(req, res, next) =>{
+    const data = req.body;
+    const result = await publish(
+        "example-create",
+        "operations-create",
+        data
+    );
+    
+    if(result){
+        res.status(StatusCodes.CREATED).json("Publicado na Fila de execução");
+    }else{
+        next(new AmqpError("Falha ao publica na fila"));
+    }
+});
+
+export const update = catchAsync((req, res, next) =>{
     const data = req.body;
     const id = req.params.id;
     contatoService.updateContact({id}, data).then((result)=>{
@@ -42,7 +58,7 @@ const update = catchAsync((req, res, next) =>{
     }).catch(next);
 });
 
-const del = catchAsync(async (req, res, next) =>{
+export const del = catchAsync(async (req, res, next) =>{
     const id = req.params.id;
     contatoService.delContact({id}).then((result)=>{
         if(result != 1){
@@ -51,11 +67,3 @@ const del = catchAsync(async (req, res, next) =>{
         res.sendStatus(StatusCodes.NO_CONTENT);
     }).catch(next);
 });
-
-export {
-    findOne,
-    find,
-    create,
-    update,
-    del
-};

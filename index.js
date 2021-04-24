@@ -9,7 +9,6 @@ function run(){
     if(env.server.active){
         server.listen(env.server.port, ()=>{
             app.use(errorHandler)
-            import('./src/socketClient')
             import('./src/job')
             startCollection()
             logger.info(`Server on http://localhost:${env.server.port}`)

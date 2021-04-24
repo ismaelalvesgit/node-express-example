@@ -50,6 +50,29 @@ paths:
               schema:
                 type: string
 
+  /contato/amqp:
+    post:
+      tags:
+        - Contato
+      summary: Criação de contatos por fila AMQP.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/contato"
+      responses:
+        200: # status code
+          description: Cadastro de contatos.
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "Criado com sucesso ID 1"
+        400: # status code
+          $ref: "#/components/responses/badRequest"
+        500: # status code
+          $ref: "#/components/responses/internal"
+          
   /contato:
     get:
       tags:
@@ -83,7 +106,7 @@ paths:
               $ref: "#/components/schemas/contato"
       responses:
         200: # status code
-          description: Retorna a lista de contatos.
+          description: Cadastro de contatos.
           content:
             application/json:
               schema:
