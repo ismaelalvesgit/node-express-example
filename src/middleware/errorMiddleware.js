@@ -1,4 +1,4 @@
-import { AmqpError, ApiError, ValidadeSchema } from "../utils/erro";
+import { AmqpError, ApiError, EmailError, ValidadeSchema } from "../utils/erro";
 import { StatusCodes } from "http-status-codes";
 import logger from "../logger";
 import elasticAgent from "../apm";
@@ -56,6 +56,11 @@ export default function errorHandler(error, req, res, next) {
             break;
         }
         case AmqpError:{
+            res.status(StatusCodes.BAD_REQUEST).json([{message: error.message}]);
+            break;
+        }
+        case EmailError:{
+            console.log(error)
             res.status(StatusCodes.BAD_REQUEST).json([{message: error.message}]);
             break;
         }

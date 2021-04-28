@@ -15,7 +15,6 @@ Feramentas Utilizadas:
 * [joi](https://www.npmjs.com/package/@hapi/joi)
 * [date-fns](https://www.npmjs.com/package/date-fns)
 * [date-fns-tz](https://www.npmjs.com/package/date-fns-tz)
-* [dotenv](https://www.npmjs.com/package/dotenv)
 * [helmet](https://www.npmjs.com/package/helmet)
 * [hide-powered-by](https://www.npmjs.com/package/hide-powered-by)
 * [http-status-codes](https://www.npmjs.com/package/http-status-codes)
@@ -31,6 +30,8 @@ Feramentas Utilizadas:
 * [amqplib](https://www.npmjs.com/package/amqplib)
 * [ramda](https://www.npmjs.com/package/ramda)
 * [i18n](https://www.npmjs.com/package/i18n)
+* [googleapis](https://www.npmjs.com/package/googleapis)
+* [nodemailer](https://www.npmjs.com/package/nodemailer)
 * [socket.io](https://socket.io/)
 * [nodemon](https://nodemon.io/)
 
@@ -91,8 +92,13 @@ Rode o comando
 set NAME=teste && npm run migrate:create
 ```
 
-## Contato
+#### 4) Email Config
+Estarei deixando o link do [appMenosSeguro](https://myaccount.google.com/u/2/lesssecureapps) que necessita estar 
+habilitado para utilização do serviço de envio de email padrão. Para utilizar os serviços de email com OAuth2 siga 
+os proximos passo [link](https://alexb72.medium.com/how-to-send-emails-using-a-nodemailer-gmail-and-oauth2-fe19d66451f9).
 
+
+## Contato
 Desenvolvido por: [Ismael Alves](https://github.com/ismaelalvesgit)
 
 * Email: [cearaismael1997@gmail.com](mailto:cearaismael1997@gmail.com) 

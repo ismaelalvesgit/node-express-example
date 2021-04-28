@@ -18,6 +18,12 @@ export class AmqpError extends CustomError {
     }
 }
 
+export class EmailError extends CustomError {
+    constructor(message){
+        super(null, message);
+    }
+}
+
 export class ValidadeSchema extends CustomError{
     constructor(statusCode, message){
         super(statusCode, JSON.stringify(message));

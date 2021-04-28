@@ -34,7 +34,7 @@ const server = env.server.ssl ? https.createServer({
 
 /** Middlewares */
 app.use(cors());
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: env.server.bodyLimit}));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(helmet());
 app.use(hsts({
