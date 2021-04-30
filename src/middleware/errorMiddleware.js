@@ -60,7 +60,6 @@ export default function errorHandler(error, req, res, next) {
             break;
         }
         case EmailError:{
-            console.log(error)
             res.status(StatusCodes.BAD_REQUEST).json([{message: error.message}]);
             break;
         }

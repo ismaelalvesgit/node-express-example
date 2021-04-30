@@ -1,4 +1,3 @@
-import ("./socketClient");
 import dotenv from "dotenv";
 import express from "express";
 import http from "http";
@@ -23,14 +22,29 @@ import path from "path";
 import { requestCounters, responseCounters, injectMetricsRoute } from "./utils/metric";
 import responseTime from "response-time";
 import i18n from "./i18n";
+import { Server } from "socket.io";
+import ioRedis from "socket.io-redis";
 
 /** Instances */
 dotenv.config();
 const app = express();
-const server = env.server.ssl ? https.createServer({
+const httpServer = env.server.ssl ? https.createServer({
     cert: readFileSync(env.security.ssl.cert),
     key: readFileSync(env.security.ssl.key),
 }, app) : http.createServer(app);
+const io = new Server(httpServer, {
+    cors:{
+        origin: "*",
+    }
+});
+
+/** Soccket Adpters */
+if(env.redis.host){
+    io.adapter(ioRedis({
+        host: env.redis.host,
+        port: env.redis.port,
+    }));
+}
 
 /** Middlewares */
 app.use(cors());
@@ -77,8 +91,11 @@ app.get("/", (req, res)=>{
 app.use("/api-doc", swagger.serve, swagger.setup(swaggerDocument));
 app.use("/system", systemRouter);
 app.use("/contato", contatoRouter);
+app.all("*", (req, res)=>{
+    res.json({message: "Rota Não Encontrada"});
+});
 
 /** Metric Endpoint */
 injectMetricsRoute(app);
 
-export { app, server };
+export { io, app, httpServer };

@@ -1,4 +1,4 @@
-import io from "../../socketClient";
+import { io } from "../../app";
 import * as model from "../../model/contato.model";
 const BASE = "contato";
 

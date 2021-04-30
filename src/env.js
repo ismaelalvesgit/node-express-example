@@ -45,8 +45,8 @@ export default {
         secretToken: process.env.APM_SECRET_TOKEN,
     },
     email:{
-        type: process.env.EMAIL_TYPE || 'OAuth2',
-        host: process.env.EMAIL_HOST || 'smtp.gmail.com',
+        type: process.env.EMAIL_TYPE || "OAuth2",
+        host: process.env.EMAIL_HOST || "smtp.gmail.com",
         port: process.env.EMAIL_PORT ||  465,
         secure: process.env.EMAIL_SECURE === "true",
         notificator: process.env.EMAIL_USER,
@@ -55,7 +55,7 @@ export default {
           clientId:  process.env.EMAIL_OAUTH2_CLIENTID,
           clientSecret: process.env.EMAIL_OAUTH2_CLIENTSECRET,
           refreshToken: process.env.EMAIL_OAUTH2_REFRESHTOKEN,
-          redirectUri: process.env.EMAIL_OAUTH2_REDIRECT_URI || 'https://developers.google.com/oauthplayground'
+          redirectUri: process.env.EMAIL_OAUTH2_REDIRECT_URI || "https://developers.google.com/oauthplayground"
         },
     }
 };

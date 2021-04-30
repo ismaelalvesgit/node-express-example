@@ -9,9 +9,9 @@ export const status = catchAsync(async (req, res, next) =>{
 });
 
 export const sendEmail = catchAsync(async (req, res, next) =>{
-    const data = req.body
+    const data = req.body;
     send(data.email, "Send Email By Teste", "bem-vindo", {nome: "Ismael Alves"})
     .then(()=>{
         res.json("OK");
-    }).catch(next)
+    }).catch(next);
 }); 

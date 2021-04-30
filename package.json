@@ -97,6 +97,7 @@
         "response-time": "^2.3.2",
         "socket.io": "^4.0.1",
         "socket.io-client": "^4.0.1",
+        "socket.io-redis": "^6.1.0",
         "swagger-jsdoc": "^7.0.0-rc.6",
         "swagger-ui-express": "^4.1.6",
         "uuid": "^8.3.2",
