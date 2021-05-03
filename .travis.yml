@@ -7,6 +7,7 @@ cache: npm
 
 services:
   - mysql
+  - docker
 
 branches:
   only:
@@ -27,5 +28,9 @@ install:
 script:
   - npm run lint
   - npm test
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker build -t express-example .
+  - docker tag express-example $DOCKER_USERNAME/express-example
+  - docker push $DOCKER_USERNAME/express-example
 
 after_success: npm run test:coverage:coveralls
