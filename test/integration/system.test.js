@@ -11,7 +11,7 @@ describe("System Router", () => {
             expect(res.body).toBeDefined();
         });
 
-        it("mail", async() => {
+        it.skip("mail", async() => {
             const res = await request(app)
             .post("/system/mail")
             .send({
