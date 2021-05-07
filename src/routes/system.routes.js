@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
-import { sendEmail, status } from "../controllers/system.controller";
-import { emailShema } from "../validations/system";
+import { download, sendEmail, status, upload } from "../controllers/system.controller";
+import { emailShema, uploadShema } from "../validations/system";
 import verify from "../middleware/verifiyMiddleware";
 
 /**
@@ -15,5 +15,17 @@ router.route("/healthcheck")
  * */    
 router.route("/mail")
     .post(verify(emailShema), sendEmail);
+
+/**
+ * POST - /system/upload
+ * */    
+router.route("/upload")
+    .post(verify(uploadShema), upload);
+
+/**
+ * GET - /system/download
+ * */    
+router.route("/download")
+.get(download);
 
 export default router;

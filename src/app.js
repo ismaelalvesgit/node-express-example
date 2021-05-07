@@ -4,6 +4,8 @@ import http from "http";
 import https from "https";
 import cors from "cors";
 import bodyParser from "body-parser";
+import multiparty from "connect-multiparty";
+import compression from "compression";
 import helmet from "helmet";
 import hidePoweredBy from "hide-powered-by";
 import hsts from "hsts";
@@ -50,6 +52,8 @@ if(env.redis.host){
 app.use(cors());
 app.use(bodyParser.json({limit: env.server.bodyLimit}));
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(multiparty());
+app.use(compression());
 app.use(helmet());
 app.use(hsts({
     maxAge: 31536000,

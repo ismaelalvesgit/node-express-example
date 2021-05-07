@@ -1,7 +1,12 @@
 import mysql from "mysql2";
 import env from "../../src/env";
+import { defaultFolder } from "../../src/utils";
 
-const execute = (sql)=> {
+/**
+ * 
+ * @param {string} sql 
+ */
+export const executeSql = (sql)=> {
     return new Promise((resolve, reject)=>{
         const query = mysql.createConnection({
             host: env.db.host,
@@ -19,4 +24,13 @@ const execute = (sql)=> {
     });
 };
 
-export default execute;
+/**
+ * 
+ * @param {Array<string>} paths 
+ */
+export const deleteFolders = (paths) =>{
+    paths.forEach((path)=>{
+        defaultFolder(path)
+    })
+}
+

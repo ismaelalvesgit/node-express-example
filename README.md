@@ -32,6 +32,12 @@ Feramentas Utilizadas:
 * [i18n](https://www.npmjs.com/package/i18n)
 * [googleapis](https://www.npmjs.com/package/googleapis)
 * [nodemailer](https://www.npmjs.com/package/nodemailer)
+* [archiver](https://www.npmjs.com/package/archiver)
+* [compression](https://www.npmjs.com/package/compression)
+* [connect-multiparty](https://www.npmjs.com/package/connect-multiparty)
+* [mv](https://www.npmjs.com/package/mv)
+* [rimraf](https://www.npmjs.com/package/rimraf)
+* [shelljs](https://www.npmjs.com/package/shelljs)
 * [socket.io](https://socket.io/)
 * [nodemon](https://nodemon.io/)
 

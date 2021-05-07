@@ -1,4 +1,4 @@
-import { AmqpError, ApiError, EmailError, ValidadeSchema } from "../utils/erro";
+import { AmqpError, ApiError, EmailError, UploadError, ValidadeSchema } from "../utils/erro";
 import { StatusCodes } from "http-status-codes";
 import logger from "../logger";
 import elasticAgent from "../apm";
@@ -17,6 +17,8 @@ const errorsConfigs = [
     { class: ApiError, i18n: "error.apiError" },
     { class: ValidadeSchema, i18n: "error.validadeSchema" },
     { class: AmqpError, i18n: "error.amqpError"},
+    { class: UploadError, i18n: "error.uploadError"},
+    { class: EmailError, i18n: "error.emailError"},
 ];
 
 /**
@@ -61,6 +63,10 @@ export default function errorHandler(error, req, res, next) {
         }
         case EmailError:{
             res.status(StatusCodes.BAD_REQUEST).json([{message: error.message}]);
+            break;
+        }
+        case UploadError:{
+            res.status(StatusCodes.SERVICE_UNAVAILABLE).json([{message: "Tente novamente mais tarde 😞"}]);
             break;
         }
         default: {

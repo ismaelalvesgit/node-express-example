@@ -24,6 +24,12 @@ export class EmailError extends CustomError {
     }
 }
 
+export class UploadError extends CustomError {
+    constructor(message){
+        super(null, message);
+    }
+}
+
 export class ValidadeSchema extends CustomError{
     constructor(statusCode, message){
         super(statusCode, JSON.stringify(message));

@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
 
+const url =  process.env.SERVER_URL  || "http://localhost:3000";
 export default {
     env: process.env.NODE_ENV || "development",
     timezone: process.env.TIME_ZONE || "America/Fortaleza",
@@ -11,6 +12,7 @@ export default {
         }
     },
     server:{
+        url,
         active: process.env.SERVER_ACTIVE === "true",
         ssl: process.env.SERVER_SSL == "true",
         port: parseInt(process.env.SERVER_PORT || "3000"),
@@ -57,5 +59,12 @@ export default {
           refreshToken: process.env.EMAIL_OAUTH2_REFRESHTOKEN,
           redirectUri: process.env.EMAIL_OAUTH2_REDIRECT_URI || "https://developers.google.com/oauthplayground"
         },
+    },
+    system:{
+        files:{
+            default: url+"/static/uploads/system/default.png",
+            uploadsPath: "./src/public/uploads/",
+            uploadsUrl: url+"/static/uploads/"
+        }
     }
 };
