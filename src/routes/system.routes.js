@@ -1,6 +1,6 @@
 import express from "express";
 const router = express.Router();
-import { download, sendEmail, status, upload } from "../controllers/system.controller";
+import { docx, download, pdf, sendEmail, spreadSheet, status, upload } from "../controllers/system.controller";
 import { emailShema, uploadShema } from "../validations/system";
 import verify from "../middleware/verifiyMiddleware";
 
@@ -27,5 +27,23 @@ router.route("/upload")
  * */    
 router.route("/download")
 .get(download);
+
+/**
+ * GET - /system/pdf
+ * */    
+router.route("/pdf")
+.get(pdf);
+
+/**
+ * GET - /system/spreadSheet
+ * */    
+router.route("/spreadSheet")
+.get(spreadSheet);
+
+/**
+ * GET - /system/docx
+ * */    
+router.route("/docx")
+.get(docx);
 
 export default router;

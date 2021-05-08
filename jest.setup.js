@@ -22,7 +22,11 @@ afterAll(async ()=>{
         deleteFolders([
             './src/public/uploads/multiple',
             './src/public/uploads/single',
-            './src/public/uploads/zip',
+            './src/public/zip',
+            './src/public/pdf',
+            './src/public/csv',
+            './src/public/xlsx',
+            './src/public/docx',
         ])
         await executeSql('DROP DATABASE IF EXISTS test_example')
     } catch (error) {console.log(error)}

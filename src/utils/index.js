@@ -4,6 +4,10 @@ import archiver from "archiver";
 import rimraf from "rimraf";
 import shell from "shelljs";
 import path from "path";
+import ejs from "ejs";
+import pdf from "html-pdf";
+import excel from "exceljs";
+import { Document, Packer, Paragraph, TextRun } from "docx";
 import env from "../env";
 import logger from "../logger";
 import { UploadError } from "./erro";
@@ -44,7 +48,7 @@ export const deleteFile = (url)=>{
  * @param {string} fileName 
  * @returns {Promise<string>}
  */
-export const generateZip = async(pathOrigin, pathDestination, type, fileName = "target")=>{
+export const generateZIP = async(pathOrigin, pathDestination, type, fileName = "target")=>{
     return new Promise((resolve, reject)=>{
         defaultFolder(pathDestination);
         const zip = archiver("zip", {
@@ -178,3 +182,109 @@ export const multipleUpload = (files, path, nameFile, limit)=>{
         }
     });
 };
+
+/**
+ * 
+ * @param {string} template 
+ * @param {object} data 
+ * @param {string} fileName 
+ * @returns {Promise<{file: import('html-pdf').FileInfo, path: string}>}
+ */
+export const generatePDF = (template, data, fileName = "teste")=>{
+    return new Promise((resolve, reject)=>{
+        const pathFile = path.join(__dirname, `../public/pdf/${fileName}.pdf`)
+        this.defaultFolder(path.join(__dirname, `../public/pdf`));
+        ejs.renderFile(path.join(__dirname, `../views/pdf/${template}.ejs`), data, (ejsErr, html)=>{
+            pdf.create(html, {
+                format: 'A4',
+            }).toFile(pathFile, (err, file)=>{
+                if(ejsErr || err){
+                    reject(err)
+                }
+                resolve(pathFile)
+            })
+        })
+    })
+}
+
+/**
+ * 
+ * @param {string} nameFile 
+ * @param {Array<import('exceljs').Column>} columns 
+ * @param {Array<Object>} rows 
+ * @param {'xlsx' | 'csv'} type
+ * @param {string} fileName
+ * @returns {Promise<string>}
+ *  
+ */
+export const generateSpreadSheet = (nameFile, columns, rows, type = 'xlsx', fileName = "teste")=>{
+    return new Promise((resolve, reject)=>{
+        const pathFile = path.join(__dirname, `../public/${type}/${fileName}.${type}`)
+        this.defaultFolder(path.join(__dirname, `../public/${type}`));
+
+        const workbook = new excel.Workbook();
+        workbook.creator = "Ismael Alves"
+        workbook.lastModifiedBy = "IS"
+        workbook.created = new Date()
+
+        const worksheet = workbook.addWorksheet(nameFile)
+        worksheet.columns = columns
+        worksheet.addRows(rows)
+
+        switch (type) {
+            case 'xlsx':
+                workbook.xlsx.writeFile(pathFile).then(() => {
+                    resolve(pathFile)
+                }).catch(reject)
+                break;
+            case 'csv':
+                workbook.csv.writeFile(pathFile).then(() => {
+                    resolve(pathFile)
+                }).catch(reject)
+                break;
+        
+            default:
+                throw new Error('Type SpreadSheet not implemented')
+        }
+    })
+}
+
+/**
+ * 
+ * @param {Object} data 
+ * @param {string} fileName 
+ * @returns {Promise<string>}
+ */
+export const generateDOCX = (data, fileName = "teste")=>{
+    return new Promise((resolve, reject)=>{
+        const pathFile = path.join(__dirname, `../public/docx/${fileName}.docx`)
+        this.defaultFolder(path.join(__dirname, `../public/docx`));
+
+        const doc = new Document({
+            sections: [
+                {
+                    children: [
+                        new Paragraph({
+                            children: [
+                                new TextRun(data),
+                                new TextRun({
+                                    text: "Foo Bar",
+                                    bold: true,
+                                }),
+                                new TextRun({
+                                    text: "\tGithub is the best",
+                                    bold: true,
+                                }),
+                            ],
+                        }),
+                    ],
+                },
+            ],
+        });
+
+        Packer.toBuffer(doc).then((buffer)=>{
+            fs.writeFileSync(pathFile, buffer)
+            resolve(pathFile)
+        }).catch(reject)
+    })
+}

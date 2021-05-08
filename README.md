@@ -38,6 +38,9 @@ Feramentas Utilizadas:
 * [mv](https://www.npmjs.com/package/mv)
 * [rimraf](https://www.npmjs.com/package/rimraf)
 * [shelljs](https://www.npmjs.com/package/shelljs)
+* [exceljs](https://www.npmjs.com/package/exceljs)
+* [docx](https://www.npmjs.com/package/docx)
+* [html-pdf](https://www.npmjs.com/package/html-pdf)
 * [socket.io](https://socket.io/)
 * [nodemon](https://nodemon.io/)
 

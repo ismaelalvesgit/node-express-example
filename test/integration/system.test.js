@@ -35,5 +35,26 @@ describe("System Router", () => {
             .expect(StatusCodes.OK);
             expect(res.body).toBeDefined();
         });
+        
+        it("pdf", async() => {
+            const res = await request(app)
+            .get("/system/pdf")
+            .expect(StatusCodes.OK);
+            expect(res.body).toBeDefined();
+        });
+        
+        it("spreadSheet", async() => {
+            const res = await request(app)
+            .get("/system/spreadSheet")
+            .expect(StatusCodes.OK);
+            expect(res.body).toBeDefined();
+        });
+        
+        it("docx", async() => {
+            const res = await request(app)
+            .get("/system/docx")
+            .expect(StatusCodes.OK);
+            expect(res.body).toBeDefined();
+        });
     });
 });
