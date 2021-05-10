@@ -192,20 +192,20 @@ export const multipleUpload = (files, path, nameFile, limit)=>{
  */
 export const generatePDF = (template, data, fileName = "teste")=>{
     return new Promise((resolve, reject)=>{
-        const pathFile = path.join(__dirname, `../public/pdf/${fileName}.pdf`)
-        this.defaultFolder(path.join(__dirname, `../public/pdf`));
+        const pathFile = path.join(__dirname, `../public/pdf/${fileName}.pdf`);
+        this.defaultFolder(path.join(__dirname, "../public/pdf"));
         ejs.renderFile(path.join(__dirname, `../views/pdf/${template}.ejs`), data, (ejsErr, html)=>{
             pdf.create(html, {
-                format: 'A4',
-            }).toFile(pathFile, (err, file)=>{
+                format: "A4",
+            }).toFile(pathFile, (err)=>{
                 if(ejsErr || err){
-                    reject(err)
+                    reject(err);
                 }
-                resolve(pathFile)
-            })
-        })
-    })
-}
+                resolve(pathFile);
+            });
+        });
+    });
+};
 
 /**
  * 
@@ -217,37 +217,37 @@ export const generatePDF = (template, data, fileName = "teste")=>{
  * @returns {Promise<string>}
  *  
  */
-export const generateSpreadSheet = (nameFile, columns, rows, type = 'xlsx', fileName = "teste")=>{
+export const generateSpreadSheet = (nameFile, columns, rows, type = "xlsx", fileName = "teste")=>{
     return new Promise((resolve, reject)=>{
-        const pathFile = path.join(__dirname, `../public/${type}/${fileName}.${type}`)
+        const pathFile = path.join(__dirname, `../public/${type}/${fileName}.${type}`);
         this.defaultFolder(path.join(__dirname, `../public/${type}`));
 
         const workbook = new excel.Workbook();
-        workbook.creator = "Ismael Alves"
-        workbook.lastModifiedBy = "IS"
-        workbook.created = new Date()
+        workbook.creator = "Ismael Alves";
+        workbook.lastModifiedBy = "IS";
+        workbook.created = new Date();
 
-        const worksheet = workbook.addWorksheet(nameFile)
-        worksheet.columns = columns
-        worksheet.addRows(rows)
+        const worksheet = workbook.addWorksheet(nameFile);
+        worksheet.columns = columns;
+        worksheet.addRows(rows);
 
         switch (type) {
-            case 'xlsx':
+            case "xlsx":
                 workbook.xlsx.writeFile(pathFile).then(() => {
-                    resolve(pathFile)
-                }).catch(reject)
+                    resolve(pathFile);
+                }).catch(reject);
                 break;
-            case 'csv':
+            case "csv":
                 workbook.csv.writeFile(pathFile).then(() => {
-                    resolve(pathFile)
-                }).catch(reject)
+                    resolve(pathFile);
+                }).catch(reject);
                 break;
         
             default:
-                throw new Error('Type SpreadSheet not implemented')
+                throw new Error("Type SpreadSheet not implemented");
         }
-    })
-}
+    });
+};
 
 /**
  * 
@@ -257,8 +257,8 @@ export const generateSpreadSheet = (nameFile, columns, rows, type = 'xlsx', file
  */
 export const generateDOCX = (data, fileName = "teste")=>{
     return new Promise((resolve, reject)=>{
-        const pathFile = path.join(__dirname, `../public/docx/${fileName}.docx`)
-        this.defaultFolder(path.join(__dirname, `../public/docx`));
+        const pathFile = path.join(__dirname, `../public/docx/${fileName}.docx`);
+        this.defaultFolder(path.join(__dirname, "../public/docx"));
 
         const doc = new Document({
             sections: [
@@ -283,8 +283,8 @@ export const generateDOCX = (data, fileName = "teste")=>{
         });
 
         Packer.toBuffer(doc).then((buffer)=>{
-            fs.writeFileSync(pathFile, buffer)
-            resolve(pathFile)
-        }).catch(reject)
-    })
-}
+            fs.writeFileSync(pathFile, buffer);
+            resolve(pathFile);
+        }).catch(reject);
+    });
+};

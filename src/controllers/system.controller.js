@@ -32,24 +32,24 @@ export const upload = catchAsync(async (req, res, next) =>{
 
 export const download = catchAsync(async (req, res, next) =>{
     generateZIP("./src/public/uploads/system", "./src/public/zip/", "folder", "teste").then((out)=>{
-        res.setHeader('Content-Type', 'application/zip')
-        res.setHeader('Content-disposition', 'attachment;filename=teste.zip')
+        res.setHeader("Content-Type", "application/zip");
+        res.setHeader("Content-disposition", "attachment;filename=teste.zip");
         res.download(out);
     }).catch(next);
 }); 
 
 export const pdf = catchAsync(async (req, res, next) =>{
-    generatePDF('bem-vindo', {nome: "Ismael Alves"}).then((out)=>{
-        res.setHeader('Content-Type', 'application/pdf')
-        res.setHeader('Content-disposition', 'attachment;filename=teste.pdf')
-        res.download(out)
-    }).catch(next)
+    generatePDF("bem-vindo", {nome: "Ismael Alves"}).then((out)=>{
+        res.setHeader("Content-Type", "application/pdf");
+        res.setHeader("Content-disposition", "attachment;filename=teste.pdf");
+        res.download(out);
+    }).catch(next);
 }); 
 
 export const spreadSheet = catchAsync(async (req, res, next) =>{
-    const type = 'xlsx'
+    const type = "xlsx";
     generateSpreadSheet(
-        'teste', 
+        "teste", 
         [
             {
                 header: "Nome",
@@ -62,16 +62,16 @@ export const spreadSheet = catchAsync(async (req, res, next) =>{
         }],
         type
     ).then((out)=>{
-        res.setHeader('Content-Type', `application/${type}`)
-        res.setHeader('Content-disposition', `attachment;filename=teste.${type}`)
-        res.download(out)
-    }).catch(next)
+        res.setHeader("Content-Type", `application/${type}`);
+        res.setHeader("Content-disposition", `attachment;filename=teste.${type}`);
+        res.download(out);
+    }).catch(next);
 }); 
 
 export const docx = catchAsync(async (req, res, next) =>{
     generateDOCX("Ismael Alves").then((out)=>{
-        res.setHeader('Content-Type', 'application/docx')
-        res.setHeader('Content-disposition', 'attachment;filename=teste.docx')
-        res.download(out)
-    }).catch(next)
+        res.setHeader("Content-Type", "application/docx");
+        res.setHeader("Content-disposition", "attachment;filename=teste.docx");
+        res.download(out);
+    }).catch(next);
 }); 

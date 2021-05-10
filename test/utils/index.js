@@ -1,6 +1,6 @@
 import mysql from "mysql2";
 import env from "../../src/env";
-import { defaultFolder } from "../../src/utils";
+import { deleteFolder } from "../../src/utils";
 
 /**
  * 
@@ -30,7 +30,7 @@ export const executeSql = (sql)=> {
  */
 export const deleteFolders = (paths) =>{
     paths.forEach((path)=>{
-        defaultFolder(path)
+        deleteFolder(path)
     })
 }
 
