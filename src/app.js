@@ -3,7 +3,6 @@ import express from "express";
 import http from "http";
 import https from "https";
 import cors from "cors";
-import bodyParser from "body-parser";
 import multiparty from "connect-multiparty";
 import compression from "compression";
 import helmet from "helmet";
@@ -50,8 +49,8 @@ if(env.redis.host){
 
 /** Middlewares */
 app.use(cors());
-app.use(bodyParser.json({limit: env.server.bodyLimit}));
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.json({limit: env.server.bodyLimit}));
+app.use(express.urlencoded({extended: true}));
 app.use(multiparty());
 app.use(compression());
 app.use(helmet());

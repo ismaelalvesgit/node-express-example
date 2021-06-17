@@ -10,7 +10,6 @@ Feramentas Utilizadas:
 * [knex](http://knexjs.org/)
 * [mysql2](https://www.npmjs.com/package/mysql2)
 * [dotenv](https://www.npmjs.com/package/dotenv)
-* [bodyParser](https://www.npmjs.com/package/body-parser)
 * [cors](https://www.npmjs.com/package/cors)
 * [joi](https://www.npmjs.com/package/@hapi/joi)
 * [date-fns](https://www.npmjs.com/package/date-fns)
