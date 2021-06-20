@@ -1,6 +1,6 @@
 FROM node:carbon
 
-LABEL maintainer="Carlos"
+LABEL maintainer="Ismael Alves <cearaismael1997@gmail.com>"
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
