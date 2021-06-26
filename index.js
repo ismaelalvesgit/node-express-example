@@ -5,7 +5,7 @@ import logger from './src/logger';
 import { startCollection } from './src/utils/metric';
 import { connect } from './src/amqp';
 
-function run(){
+setImmediate(() =>{
     if(env.server.active){
         httpServer.listen(env.server.port, ()=>{
             app.use(errorHandler)
@@ -20,6 +20,4 @@ function run(){
     if(env.amqp.active){
         connect()
     }
-}
-
-run();
+})
