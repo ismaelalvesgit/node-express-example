@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent { docker { image 'node:carbon'} }
 
     environment {
         DB_USERNAME = "root"
@@ -8,6 +8,7 @@ pipeline {
     }
 
     stages {
+
         stage('Cloning Git') {
             steps {
                 git branch: 'master',
@@ -18,21 +19,26 @@ pipeline {
         }
 
         stage('Build') {
-            agent { docker { image 'node:carbon'} }
             steps {
                 sh 'npm i'
             }
         }
 
         stage('Test') {
-            agent {
-                docker {
-                    image 'mysql:5.7'
-                }
-            }
-
             steps {
-                sh 'node --version'
+                parallel {
+                    stage ('lint') {
+                        steps {
+                            sh 'npm run lint'
+                        }
+                    }
+                    
+                    stage ('unit') {
+                        steps {
+                            sh 'npm run test:unit'
+                        }
+                    }
+                }
             }
         }
     }
