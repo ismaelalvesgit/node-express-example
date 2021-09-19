@@ -1,9 +1,5 @@
 pipeline {
-    agent {
-        docker { 
-            image 'node:carbon'
-        }
-    }
+    agent any
 
     environment {
         DB_USERNAME = "root"
@@ -22,21 +18,22 @@ pipeline {
         }
 
         stage('Build') {
+            agent { docker { image 'node:carbon'} }
             steps {
                 sh 'npm i'
             }
         }
 
         stage('Test') {
-            steps {
-                sh 'docker run --name jenkins-mysql -e MYSQL_ROOT_PASSWORD=${DB_PASSWORD} MYSQL_DATABASE=${DB_DATABASE}'
-                sh 'npm run lint'
+            agent {
+                docker {
+                    image 'mysql:5.7'
+                    args '-e MYSQL_ROOT_PASSWORD=${DB_PASSWORD} MYSQL_DATABASE=${DB_DATABASE} -d'
+                }
             }
 
-            post {
-                always {
-                    sh 'docker rm -f jenkins-mysql'
-                }
+            steps {
+                sh 'node --version'
             }
         }
     }
