@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker { image 'node:carbon'}
     }
-    
+
     stages {
         stage('Cloning Git') {
             steps {
@@ -10,6 +10,12 @@ pipeline {
                     credentialsId: 'gogs',
                     url: 'http://gogs:3000/root/example'
                 sh "ls -lat"
+            }
+        }
+
+         stage('Build') {
+            steps {
+                sh 'npm i'
             }
         }
     }
