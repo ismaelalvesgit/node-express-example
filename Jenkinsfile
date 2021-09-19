@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent { docker { image 'node:carbo'} }
 
     environment {
         DB_HOST = "mysql"
@@ -33,9 +33,15 @@ pipeline {
                     }
                 }
                 
-                stage ('unit') {
+                stage ('jest') {
                     steps {
                         sh 'npm test'
+                    }
+
+                    post {
+                        always {
+                            step([$class: 'CoberturaPublisher', coberturaReportFile: 'coverage/cobertura-coverage.xml'])
+                        }
                     }
                 }
             }
