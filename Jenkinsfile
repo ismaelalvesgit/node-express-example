@@ -3,6 +3,12 @@ pipeline {
         docker { image 'node:carbon'}
     }
 
+    environment {
+        DB_USERNAME = "root"
+        DB_PASSWORD = "root"
+        DB_DATABASE = "test_example"
+    }
+
     stages {
         stage('Cloning Git') {
             steps {
@@ -13,9 +19,21 @@ pipeline {
             }
         }
 
-         stage('Build') {
+        stage('Build') {
             steps {
                 sh 'npm i'
+            }
+        }
+
+        stage('Test') {
+            agent {
+                docker {
+                image 'mysql'
+                args '-e MYSQL_ROOT_PASSWORD=${DB_PASSWORD} MYSQL_DATABASE=${DB_DATABASE} -d'}
+            }
+
+            steps {
+                sh 'npm run lint'
             }
         }
     }
