@@ -29,6 +29,7 @@ pipeline {
             agent {
                 docker {
                     image 'nginx'
+                    args '--name some-nginx'
                 }
             }
 
