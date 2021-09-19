@@ -51,8 +51,9 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     sh 'docker login --username $USERNAME --password $PASSWORD'
-                    sh 'docker build -t ismaelalvesdoc/express-example -t ismaelalvesdoc/express-example:${npm run version} .'
-                    sh 'docker push ismaelalvesdoc/express-example && docker push ismaelalvesdoc/express-example:${npm run version}'
+                    sh 'VERSION=$(node -p "require('./package').version")'
+                    sh 'docker build -t ismaelalvesdoc/express-example -t ismaelalvesdoc/express-example:$VERSION .'
+                    sh 'docker push ismaelalvesdoc/express-example && docker push ismaelalvesdoc/express-example:$VERSION'
                 }
             }
         }
