@@ -1,7 +1,9 @@
 pipeline {
     agent {
-        label 'docker'
-        docker { image 'node:carbon'}
+        docker { 
+            image 'node:carbon'
+            reuseNode true
+        }
     }
 
     environment {
@@ -28,7 +30,6 @@ pipeline {
 
         stage('Test') {
             agent {
-                label 'docker'
                 docker {
                     image 'nginx'
                     args '--name some-nginx'
