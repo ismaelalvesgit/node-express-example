@@ -6,7 +6,6 @@ pipeline {
         DB_USERNAME = "root"
         DB_PASSWORD = "admin"
         DB_DATABASE = "test_example"
-        VERSION = ${node -e "console.log(require('./package.json').version)";}
     }
 
     stages {
@@ -49,6 +48,10 @@ pipeline {
         }
 
         stage('Deploy Docker') {
+            environment {
+                VERSION = ${node -e "console.log(require('./package.json').version)";}
+            }
+
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     sh 'docker login --username $USERNAME --password $PASSWORD'
