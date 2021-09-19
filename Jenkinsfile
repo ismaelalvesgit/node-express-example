@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-        docker { image 'node:carbon'}
-    }
+    agent none
 
     environment {
         DB_USERNAME = "root"
@@ -20,6 +18,7 @@ pipeline {
         }
 
         stage('Build') {
+            agent { docker { image 'node:carbon'} }
             steps {
                 sh 'npm i'
             }
