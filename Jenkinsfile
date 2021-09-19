@@ -35,7 +35,7 @@ pipeline {
                 
                 stage ('jest') {
                     steps {
-                        sh 'npm test'
+                        sh 'npm run test:coverage'
                     }
 
                     post {
@@ -45,12 +45,6 @@ pipeline {
                     }
                 }
             }
-        }
-    }
-
-    post {
-        always {
-            sh 'docker rmi --force $(docker images -q --filter "dangling=true")'
         }
     }
 }
