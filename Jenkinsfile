@@ -1,5 +1,5 @@
 pipeline {
-    agent { docker { image 'node:14'} }
+    agent any
 
     environment {
         DB_HOST = "mysql"
@@ -45,6 +45,12 @@ pipeline {
                     }
                 }
             }
+        }
+    }
+
+    post {
+        always {
+            sh 'docker rmi --force $(docker images -q --filter "dangling=true")'
         }
     }
 }
