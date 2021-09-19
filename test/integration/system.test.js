@@ -36,7 +36,7 @@ describe("System Router", () => {
             expect(res.body).toBeDefined();
         });
         
-        it("pdf", async() => {
+        it.skip("pdf", async() => {
             const res = await request(app)
             .get("/system/pdf")
             .expect(StatusCodes.OK);
