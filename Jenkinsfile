@@ -28,7 +28,7 @@ pipeline {
         stage('Test') {
             agent {
                 docker {
-                    image 'mysql:5.7'
+                    image 'nginx'
                 }
             }
 
