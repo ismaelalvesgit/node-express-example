@@ -6,6 +6,7 @@ pipeline {
         DB_USERNAME = "root"
         DB_PASSWORD = "admin"
         DB_DATABASE = "test_example"
+        VERSION = ${node -e console.log(require('./package.json').version);}
     }
 
     stages {
@@ -51,6 +52,8 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     sh 'docker login --username $USERNAME --password $PASSWORD'
+                    sh 'docker build -t ismaelalvesdoc/express-example -t ismaelalvesdoc/express-example:${VERSION} .'
+                    sh 'docker push ismaelalvesdoc/express-example && docker push ismaelalvesdoc/express-example:${VERSION}'
                 }
             }
         }
