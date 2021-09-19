@@ -49,7 +49,7 @@ pipeline {
 
         stage('Deploy Docker') {
             environment {
-                VERSION = ${node -e "console.log(require('./package.json').version)";}
+                VERSION = "${node -e "console.log(require('./package.json').version)";}"
             }
 
             steps {
