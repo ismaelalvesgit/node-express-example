@@ -1,5 +1,5 @@
 pipeline {
-    agent { docker { image 'node:carbo'} }
+    agent { docker { image 'node:carbon'} }
 
     environment {
         DB_HOST = "mysql"
