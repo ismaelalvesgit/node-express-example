@@ -4,7 +4,7 @@ pipeline {
     environment {
         DB_HOST = "mysql"
         DB_USERNAME = "root"
-        DB_PASSWORD = "root"
+        DB_PASSWORD = "admin"
         DB_DATABASE = "test_example"
     }
 
@@ -35,7 +35,7 @@ pipeline {
                 
                 stage ('unit') {
                     steps {
-                        sh 'npm run test:unit'
+                        sh 'npm test'
                     }
                 }
             }
