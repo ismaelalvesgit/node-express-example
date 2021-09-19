@@ -2,7 +2,6 @@ pipeline {
     agent {
         docker { 
             image 'node:carbon'
-            reuseNode true
         }
     }
 
@@ -29,15 +28,15 @@ pipeline {
         }
 
         stage('Test') {
-            agent {
-                docker {
-                    image 'nginx'
-                    args '--name some-nginx'
-                }
+            steps {
+                sh 'docker run --name jenkins-mysql -e MYSQL_ROOT_PASSWORD=${DB_PASSWORD} MYSQL_DATABASE=${DB_DATABASE}'
+                sh 'npm run lint'
             }
 
-            steps {
-                sh 'npm run lint'
+            post {
+                always {
+                    sh 'docker rm -f jenkins-mysql'
+                }
             }
         }
     }
