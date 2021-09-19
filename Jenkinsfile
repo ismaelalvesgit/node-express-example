@@ -6,7 +6,7 @@ pipeline {
         DB_USERNAME = "root"
         DB_PASSWORD = "admin"
         DB_DATABASE = "test_example"
-        VERSION = ${node -e console.log(require('./package.json').version);}
+        VERSION = ${node -e "console.log(require('./package.json').version)";}
     }
 
     stages {
