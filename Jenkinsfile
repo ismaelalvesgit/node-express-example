@@ -48,15 +48,11 @@ pipeline {
         }
 
         stage('Deploy Docker') {
-            environment {
-                VERSION = "${node -e "console.log(require('./package.json').version)";}"
-            }
-
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     sh 'docker login --username $USERNAME --password $PASSWORD'
-                    sh 'docker build -t ismaelalvesdoc/express-example -t ismaelalvesdoc/express-example:${VERSION} .'
-                    sh 'docker push ismaelalvesdoc/express-example && docker push ismaelalvesdoc/express-example:${VERSION}'
+                    sh 'docker build -t ismaelalvesdoc/express-example -t ismaelalvesdoc/express-example:${${node -e "console.log(require('./package.json').version)";}} .'
+                    sh 'docker push ismaelalvesdoc/express-example && docker push ismaelalvesdoc/express-example:${${node -e "console.log(require('./package.json').version)";}}'
                 }
             }
         }
