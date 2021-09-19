@@ -28,8 +28,8 @@ pipeline {
         stage('Test') {
             agent {
                 docker {
-                image 'mysql:5.7'
-                args '-e MYSQL_ROOT_PASSWORD=root MYSQL_DATABASE=test_example -d'}
+                    image 'mysql:5.7'
+                }
             }
 
             steps {
