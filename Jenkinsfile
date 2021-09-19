@@ -1,5 +1,5 @@
 pipeline {
-    agent { docker { image 'node:carbon'} }
+    agent any
 
     environment {
         DB_USERNAME = "root"
@@ -25,18 +25,16 @@ pipeline {
         }
 
         stage('Test') {
-            steps {
-                parallel {
-                    stage ('lint') {
-                        steps {
-                            sh 'npm run lint'
-                        }
+            parallel {
+                stage ('lint') {
+                    steps {
+                        sh 'npm run lint'
                     }
-                    
-                    stage ('unit') {
-                        steps {
-                            sh 'npm run test:unit'
-                        }
+                }
+                
+                stage ('unit') {
+                    steps {
+                        sh 'npm run test:unit'
                     }
                 }
             }
