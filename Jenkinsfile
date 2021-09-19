@@ -35,7 +35,7 @@ pipeline {
                 
                 stage ('unit') {
                     steps {
-                        sh 'docker run --name jenkins-mysql -e MYSQL_ROOT_PASSWORD=${DB_PASSWORD} MYSQL_DATABASE=${DB_DATABASE} -p ${DB_PORT}:3306 -d'
+                        sh 'docker run --name jenkins-mysql -e MYSQL_ROOT_PASSWORD=${DB_PASSWORD} MYSQL_DATABASE=${DB_DATABASE} -p ${DB_PORT}:3306 -d mysql:5.7'
                         sh 'npm run test:unit'
                     }
 
