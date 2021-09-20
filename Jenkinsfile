@@ -8,6 +8,7 @@ pipeline {
         DB_USERNAME = "root"
         DB_PASSWORD = "admin"
         DB_DATABASE = "test_example"
+        DOCKER_REPO = "ismaelalvesdoc/express-example"
     }
 
     stages {
@@ -46,32 +47,35 @@ pipeline {
                         }
                     }
                 }
-
-                stage('Code Quality SonarQube') {
-                    steps {
-                        script {
-                            withCredentials([string(credentialsId: 'sonarqube', variable: 'LOGIN')]) {
-                                def scannerHome = tool 'sonarqube-scanner';
-                                withSonarQubeEnv("sonarqube-container") {
-                                    sh "${tool("sonarqube-scanner")}/bin/sonar-scanner \
-                                    -Dsonar.projectKey=$SONARQUBE_PROJECT_KEY \
-                                    -Dsonar.sources=. \
-                                    -Dsonar.css.node=. \
-                                    -Dsonar.host.url=$SONARQUBE_URL \
-                                    -Dsonar.login=$LOGIN"
-                                }
-                            }
+            }
+        }
+        
+        stage('Code Quality SonarQube') {
+            steps {
+                script {
+                    withCredentials([string(credentialsId: 'sonarqube', variable: 'LOGIN')]) {
+                        def scannerHome = tool 'sonarqube-scanner';
+                        withSonarQubeEnv("sonarqube-container") {
+                            sh "${tool("sonarqube-scanner")}/bin/sonar-scanner \
+                            -Dsonar.projectKey=$SONARQUBE_PROJECT_KEY \
+                            -Dsonar.sources=. \
+                            -Dsonar.css.node=. \
+                            -Dsonar.host.url=$SONARQUBE_URL \
+                            -Dsonar.sourceEncoding='UTF-8' \
+                            -Dsonar.javascript.lcov.reportPaths='coverage/lcov.info' \
+                            -Dsonar.login=$LOGIN"
                         }
                     }
                 }
             }
         }
 
-
         stage('Deploy Docker') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     sh 'docker login --username $USERNAME --password $PASSWORD'
+                    sh 'docker build -t $DOCKER_REPO -t $DOCKER_REPO:0.1.0 .'
+                    sh 'docker push $DOCKER_REPO && docker push $DOCKER_REPO:0.1.0'
                 }
             }
         }
