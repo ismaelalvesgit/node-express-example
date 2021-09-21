@@ -16,13 +16,6 @@ pipeline {
 
         stage('Checkout Code') {
             steps {
-                script {
-                    def scmVars = checkout([
-                        $class: 'GitSCM',
-                        ...
-                    ])
-                    echo "${scmVars.GIT_COMMIT}"
-                }
                 git branch: 'master',
                     credentialsId: 'gogs',
                     url: 'http://gogs:3000/root/example'
@@ -97,7 +90,7 @@ pipeline {
 
     post {
         success {
-            emailext body: 'COMMIT: ${scmVars.GIT_COMMIT}', 
+            emailext body: 'COMMIT: ${GIT_COMMIT}', 
             recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
             subject: 'Build Sucess Jenkins: $JOB_NAME - #$BUILD_NUMBER'
         }
