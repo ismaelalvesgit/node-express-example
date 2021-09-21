@@ -96,13 +96,13 @@ pipeline {
         }
 
         failure {
-            emailext body: """
-            Check console output at $BUILD_URL to view the results. 
-            ------------------------------------------------- 
-            ${CHANGES} 
-            ------------------------------------------------- 
-            ${BUILD_LOG, maxLines=100, escapeHtml=false}
-            """, 
+            emailext body: '''
+                Check console output at $BUILD_URL to view the results. 
+                ------------------------------------------------- 
+                ${CHANGES} 
+                ------------------------------------------------- 
+                ${BUILD_LOG, maxLines=100, escapeHtml=false}
+            ''', 
             to: "${EMAIL_TO}", 
             subject: 'Build failed Jenkins: $PROJECT_NAME - #$BUILD_NUMBER'
         }
