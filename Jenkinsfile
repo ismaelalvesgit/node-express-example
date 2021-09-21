@@ -19,9 +19,6 @@ pipeline {
                     credentialsId: 'gogs',
                     url: 'http://gogs:3000/root/example'
                 sh "ls -lat"
-                sh 'echo $GIT_COMMIT'
-                sh 'echo $GIT_BRANCH'
-                sh 'echo $GIT_REVISION'
             }
         }
 
@@ -92,7 +89,7 @@ pipeline {
 
     post {
         success {
-            emailext body: 'COMMIT: ${GIT_COMMIT}', 
+            emailext body: 'COMMIT: $GIT_COMMIT', 
             recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
             subject: 'Build Sucess Jenkins: $JOB_NAME - #$BUILD_NUMBER'
         }
@@ -106,7 +103,7 @@ pipeline {
                 ${BUILD_LOG, maxLines=100, escapeHtml=false}
             ''', 
             recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
-            subject: 'Build failed Jenkins: $JOB_NAME - #$BUILD_NUMBER, COMMIT: '
+            subject: 'Build failed Jenkins: $JOB_NAME - #$BUILD_NUMBER, COMMIT: $GIT_COMMIT'
         }
     }
 }
