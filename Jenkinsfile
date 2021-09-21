@@ -9,6 +9,7 @@ pipeline {
         DB_PASSWORD = "admin"
         DB_DATABASE = "test_example"
         DOCKER_REPO = "ismaelalvesdoc/express-example"
+        EMAIL_TO = 'cearaismael1997@gmail.com'
     }
 
     stages {
@@ -78,7 +79,28 @@ pipeline {
                     sh 'docker push $DOCKER_REPO && docker push $DOCKER_REPO:0.1.0'
                 }
             }
+			
+			post {
+                always {
+                    sh 'docker rmi --force $(docker images -q --filter "dangling=true")'
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            emailext body: 'SUCCESS: ${currentBuild.fullDisplayName}', 
+            to: "${EMAIL_TO}", 
+            subject: 'Build Sucess Jenkins: $PROJECT_NAME - #$BUILD_NUMBER'
         }
 
+        failure {
+            emailext body: 'Check console output at $BUILD_URL to view the results. \n\n 
+                ${CHANGES} \n\n -------------------------------------------------- \n
+                ${BUILD_LOG, maxLines=100, escapeHtml=false}', 
+            to: "${EMAIL_TO}", 
+            subject: 'Build failed Jenkins: $PROJECT_NAME - #$BUILD_NUMBER'
+        }
     }
 }
