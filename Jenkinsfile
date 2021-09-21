@@ -91,7 +91,7 @@ pipeline {
         success {
             emailext body: 'COMMIT: ${GIT_COMMIT}', 
             recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
-            to: '${GIT_COMMITTER_EMAIL}, ${GIT_AUTHOR_EMAIL}'
+            to: '${GIT_COMMITTER_EMAIL}, ${GIT_AUTHOR_EMAIL}',
             subject: 'Build Sucess Jenkins: $JOB_NAME - #$BUILD_NUMBER'
         }
 
