@@ -14,8 +14,15 @@ pipeline {
 
     stages {
 
-        stage('Cloning Git') {
+        stage('Checkout Code') {
             steps {
+                script {
+                    def scmVars = checkout([
+                        $class: 'GitSCM',
+                        ...
+                    ])
+                    echo "${scmVars.GIT_COMMIT}"
+                }
                 git branch: 'master',
                     credentialsId: 'gogs',
                     url: 'http://gogs:3000/root/example'
@@ -90,9 +97,9 @@ pipeline {
 
     post {
         success {
-            emailext body: 'SUCCESS: ${currentBuild.fullDisplayName}', 
-            to: "${EMAIL_TO}", 
-            subject: 'Build Sucess Jenkins: $PROJECT_NAME - #$BUILD_NUMBER'
+            emailext body: 'COMMIT: ${scmVars.GIT_COMMIT}', 
+            recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
+            subject: 'Build Sucess Jenkins: $JOB_NAME - #$BUILD_NUMBER'
         }
 
         failure {
@@ -103,8 +110,8 @@ pipeline {
                 ------------------------------------------------- 
                 ${BUILD_LOG, maxLines=100, escapeHtml=false}
             ''', 
-            to: "${EMAIL_TO}", 
-            subject: 'Build failed Jenkins: $PROJECT_NAME - #$BUILD_NUMBER'
+            recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
+            subject: 'Build failed Jenkins: $JOB_NAME - #$BUILD_NUMBER, COMMIT: '
         }
     }
 }
