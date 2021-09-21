@@ -9,7 +9,6 @@ pipeline {
         DB_PASSWORD = "admin"
         DB_DATABASE = "test_example"
         DOCKER_REPO = "ismaelalvesdoc/express-example"
-        EMAIL_TO = 'cearaismael1997@gmail.com'
     }
 
     stages {
@@ -20,6 +19,9 @@ pipeline {
                     credentialsId: 'gogs',
                     url: 'http://gogs:3000/root/example'
                 sh "ls -lat"
+                sh 'echo env.GIT_COMMIT'
+                sh 'echo env.GIT_BRANCH'
+                sh 'echo env.GIT_REVISION'
             }
         }
 
