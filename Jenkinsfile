@@ -19,9 +19,9 @@ pipeline {
                     credentialsId: 'gogs',
                     url: 'http://gogs:3000/root/example'
                 sh "ls -lat"
-                sh 'echo ${env.GIT_COMMIT}'
-                sh 'echo ${env.GIT_BRANCH}'
-                sh 'echo ${env.GIT_REVISION}'
+                sh 'echo $GIT_COMMIT'
+                sh 'echo $GIT_BRANCH'
+                sh 'echo $GIT_REVISION'
             }
         }
 
