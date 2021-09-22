@@ -89,9 +89,8 @@ pipeline {
 
     post {
         success {
-            emailext body: "${DEFAULT_CONTENT}", 
+            emailext body: 'COMMIT: ${CHANGES}', 
             recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
-            to: '${env.GIT_COMMITTER_EMAIL}, ${env.GIT_AUTHOR_EMAIL}',
             subject: 'Build Sucess Jenkins: $JOB_NAME - #$BUILD_NUMBER'
         }
 
@@ -104,8 +103,7 @@ pipeline {
                 ${BUILD_LOG, maxLines=100, escapeHtml=false}
             ''', 
             recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
-            to: '${env.GIT_COMMITTER_EMAIL}, ${env.GIT_AUTHOR_EMAIL}',
-            subject: 'Build failed Jenkins: $JOB_NAME - #$BUILD_NUMBER, COMMIT: $GIT_COMMIT'
+            subject: 'Build failed Jenkins: $JOB_NAME - #$BUILD_NUMBER'
         }
     }
 }
