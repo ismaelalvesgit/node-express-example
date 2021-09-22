@@ -89,7 +89,7 @@ pipeline {
 
     post {
         success {
-            emailext body: 'COMMIT: ${CHANGES}', 
+            emailext body: 'ALTERATIONS: ${CHANGES}', 
             recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
             subject: 'Build Sucess Jenkins: $JOB_NAME - #$BUILD_NUMBER'
         }
