@@ -81,7 +81,7 @@ pipeline {
 			
 			post {
                 always {
-                    sh 'docker rmi --force $(docker images -q --filter "dangling=true")'
+                    sh 'docker rmi --force $(docker images -q --filter "dangling=true") > /dev/null 2>&1'
                 }
             }
         }
