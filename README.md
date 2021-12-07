@@ -1,6 +1,5 @@
 # Ambiente de EXEMPLO para express.js
-[![Build Status](https://travis-ci.com/ismaelalvesgit/node-express-example.svg?branch=master)](https://travis-ci.com/ismaelalvesgit/node-express-example)
-[![Build Status](http://localhost:8080/job/example/badge/icon)](http://localhost:8080/job/example/)
+[![Build Status](https://app.travis-ci.com/ismaelalvesgit/node-express-example.svg?branch=master)](https://app.travis-ci.com/ismaelalvesgit/node-express-example)
 
 Este projeto foi criado para motivos acadêmicos para minha aprendizagem pessoal
 utilizando [Node.js](https://nodejs.org/en/) e [Express](https://expressjs.com/pt-br/).
