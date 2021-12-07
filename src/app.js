@@ -61,10 +61,10 @@ app.use(hsts({
 }));
 app.use(xssFilter());
 app.use(hidePoweredBy());
-app.use(uuidMiddleware);
 app.use(responseCounters);
 app.use(requestCounters);
 app.use(responseTime());
+app.use(uuidMiddleware);
 app.use(i18n.init);
 
 /** Engine View */

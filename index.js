@@ -14,7 +14,6 @@ setImmediate(() =>{
             startCollection()
             logger.info(`Server on http://localhost:${env.server.port}`)
         })
-        
     }
 
     if(env.amqp.active){

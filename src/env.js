@@ -13,7 +13,7 @@ export default {
     },
     server:{
         url,
-        active: process.env.SERVER_ACTIVE === "true",
+        active: process.env.HTTP_ACTIVE === "true",
         ssl: process.env.SERVER_SSL == "true",
         port: parseInt(process.env.SERVER_PORT || "3000"),
         bodyLimit: process.env.SERVER_BODY_LIMIT || "500kb"
