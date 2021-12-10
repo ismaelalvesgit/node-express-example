@@ -50,9 +50,9 @@ secret:
   DB_PASSWORD: admin
 
 jobs:
-  - name: example-job
+  - name: example
     schedule: "*/1 * * * *"
-    namespace: 
+    namespace:
     labels: 
       cronjob: "minute"  
     command: example
