@@ -18,12 +18,12 @@ env:
   SSL_CERT:
   SSL_KEY: 
   AMQP_PROTOCOL: amqp
-  AMQP_HOSTNAME: localhost
+  AMQP_HOSTNAME: kubernetes.docker.internal
   AMQP_PORT: 5672
   AMQP_USERNAME: admin
   AMQP_PASSWORD: admin
   AMQP_VHOST: /
-  DB_HOST: localhost
+  DB_HOST: kubernetes.docker.internal
   DB_PORT: 3306
   DB_USERNAME: root
   DB_DATABASE: example
@@ -31,7 +31,7 @@ env:
   REDIS_HOST: localhost
   REDIS_PORT: 6379
   REDIS_PREFIX: example
-  APM_SERVER_URL: http://localhost:8200
+  APM_SERVER_URL: http://kubernetes.docker.internal:8200
   APM_SERVICE_NAME: example
   APM_API_KEY: 
   APM_SECRET_TOKEN: 
@@ -48,6 +48,14 @@ env:
 
 secret:
   DB_PASSWORD: admin
+
+jobs:
+  - name: example-job
+    schedule: "*/1 * * * *"
+    namespace: 
+    labels: 
+      cronjob: "minute"  
+    command: example
 
 replicaCount: 1
 

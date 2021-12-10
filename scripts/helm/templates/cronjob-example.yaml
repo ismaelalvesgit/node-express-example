@@ -1,0 +1,3 @@
+{{- range $test := .Values.jobs }}
+{{ printf "%s-%s" $test.name }}
+{{- end }}

@@ -2,6 +2,7 @@ import { AmqpError, ApiError, EmailError, UploadError, ValidadeSchema } from "..
 import { StatusCodes } from "http-status-codes";
 import logger from "../logger";
 import elasticAgent from "../apm";
+import env from "../env";
 
 /**
  * @typedef ErrorConfig
@@ -73,7 +74,7 @@ export default function errorHandler(error, req, res, next) {
             if(error.code){
                 res.status(StatusCodes.BAD_REQUEST).json([{message: error.sqlMessage}]);
             }else{
-                if(elasticAgent){
+                if(env.apm.serviceName){
                     elasticAgent.captureError(error);
                 }
                 logger.error(`${req.id} ${error.message}`);
