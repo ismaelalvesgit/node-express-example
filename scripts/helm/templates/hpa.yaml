@@ -4,6 +4,9 @@ kind: HorizontalPodAutoscaler
 metadata:
   name: {{ template "service.fullname" . }}
   labels: {{ include "service.labels" . | nindent 5 }}
+  {{- if .Values.namespace }}
+  namespace: {{ .Values.namespace }}
+  {{- end}}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1

@@ -3,6 +3,9 @@ kind: Deployment
 metadata:
   name: {{ template "service.fullname" . }}
   labels: {{ include "service.labels" . | nindent 4 }}
+  {{- if .Values.namespace }}
+  namespace: {{ .Values.namespace }}
+  {{- end}}
 spec:
   replicas: {{ .Values.replicaCount }}
   minReadySeconds: 100

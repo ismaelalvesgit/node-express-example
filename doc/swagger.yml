@@ -133,13 +133,13 @@ paths:
           description: Nome do contato
           schema:
             type: string
-            example: "Carlos"
+            example: "Ismael Alves"
         - in: query
           name: telefone
           description: Telefone do contato
           schema:
             type: string
-            example: "2835086501612"
+            example: "8598546123145"
       responses:
         200: # status code
           $ref: "#/components/responses/contato"
@@ -338,4 +338,4 @@ components:
           example: "Ismael Alves"
         telefone:
           type: string
-          example: "2835086501612"
+          example: "8598546123145"

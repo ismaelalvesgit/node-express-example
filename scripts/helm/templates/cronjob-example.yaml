@@ -5,9 +5,13 @@ metadata:
   name: "{{ .name }}-job"
   {{- if .namespace }}
   namespace: {{ .namespace }}
-  {{- end}}
+  {{ else if $.Values.namespace }}
+  namespace: {{ $.Values.namespace }}
+  {{- end }}
   labels:
+    {{- if .labels.jobgroup }}
     jobgroup: {{ .labels.jobgroup }}
+    {{- end }}
 spec:
   schedule: {{ .schedule | quote }}
   concurrencyPolicy: Forbid

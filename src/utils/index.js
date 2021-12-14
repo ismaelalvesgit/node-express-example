@@ -69,7 +69,8 @@ export const generateZIP = async(pathOrigin, pathDestination, type, fileName = "
         zip.pipe(output);
         switch (type) {
             case "file":
-                logger.debug(fs.createWriteStream(pathOrigin));
+                throw new Error("Type SpreadSheet not implemented");
+                // logger.debug(fs.createWriteStream(pathOrigin));
                 // zip.append(fs.createWriteStream(pathOrigin), {name: fileName})
                 break;
             case "folder": 
@@ -242,7 +243,6 @@ export const generateSpreadSheet = (nameFile, columns, rows, type = "xlsx", file
                     resolve(pathFile);
                 }).catch(reject);
                 break;
-        
             default:
                 throw new Error("Type SpreadSheet not implemented");
         }

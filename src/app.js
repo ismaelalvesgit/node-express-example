@@ -39,7 +39,7 @@ const io = new Server(httpServer, {
     }
 });
 
-/** Soccket Adpters */
+/** Socket Adpters */
 if(env.redis.host){
     io.adapter(ioRedis({
         host: env.redis.host,
@@ -87,18 +87,19 @@ app.use(morgan(":id :remote-addr - :remote-user [:date[clf]] \":method :url HTTP
     stream: logger.stream
 }));
 
+/** Metric Endpoint */
+injectMetricsRoute(app);
+
 /** Routers */
 app.get("/", (req, res)=>{
     res.render("index");
 });
+
 app.use("/api-doc", swagger.serve, swagger.setup(swaggerDocument));
 app.use("/system", systemRouter);
 app.use("/contato", contatoRouter);
 app.all("*", (req, res)=>{
     res.json({message: "Rota Não Encontrada"});
 });
-
-/** Metric Endpoint */
-injectMetricsRoute(app);
 
 export { io, app, httpServer };

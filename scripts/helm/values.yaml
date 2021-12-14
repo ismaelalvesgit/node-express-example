@@ -1,3 +1,7 @@
+namespace: 
+
+replicaCount: 1
+
 image:
   repository: ismaelalvesdoc/express-example
   tag: latest
@@ -49,16 +53,6 @@ env:
 secret:
   DB_PASSWORD: admin
 
-jobs:
-  - name: example
-    schedule: "*/1 * * * *"
-    namespace:
-    labels: 
-      cronjob: "minute"  
-    command: example
-
-replicaCount: 1
-
 resources:
   requests:
     memory: "128Mi"
@@ -66,6 +60,14 @@ resources:
   limits:
     memory: "500Mi"
     cpu: 200m
+
+jobs:
+  - name: example
+    schedule: "*/1 * * * *"
+    namespace:
+    labels: 
+      jobgroup: "minute"  
+    command: example
 
 autoscaling:
   enabled: true

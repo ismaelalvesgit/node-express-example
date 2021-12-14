@@ -3,6 +3,9 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ template "service.fullname" . }}
+  {{- if .Values.namespace }}
+  namespace: {{ .Values.namespace }}
+  {{- end}}
 spec:
   selector: {{ include "service.labels" . | nindent 4 }}
   ports:

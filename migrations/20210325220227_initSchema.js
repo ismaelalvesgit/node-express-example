@@ -13,7 +13,7 @@ exports.up = async function(knex) {
     await knex.schema.createTable('contato', (table)=>{
       table.bigIncrements('id').unsigned();
       table.string('nome').notNullable();
-      table.string('telefone', 11).notNullable();
+      table.string('telefone', 20).notNullable();
       table.unique('telefone');
       createdAt(knex, table);
       updatedAt(knex, table);

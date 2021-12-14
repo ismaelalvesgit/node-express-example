@@ -3,7 +3,7 @@ FROM node:carbon
 LABEL maintainer="Ismael Alves <cearaismael1997@gmail.com>"
 WORKDIR /app
 COPY package*.json ./
-RUN npm install
+RUN npm install --production
 COPY . .
 
 # Porta

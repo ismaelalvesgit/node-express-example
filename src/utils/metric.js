@@ -48,10 +48,10 @@ export const startCollection = ()=>{
 
 /**
  * 
- * @param {import('express').Express} App 
+ * @param {import('express').Express} app 
  */
-export const injectMetricsRoute = (App)=>{
-    App.get("/system/metrics", (req, res, next) => {
+export const injectMetricsRoute = (app)=>{
+    app.get("/system/metrics", (req, res, next) => {
         res.set("Content-Type", register.contentType);
         register.metrics()
         .then((metrics)=>{

@@ -129,36 +129,6 @@ services:
       elasticsearch:
         condition: service_healthy
 
-  logstash:
-    image: docker.elastic.co/logstash/logstash:${ELASTIC_VERSION}
-    container_name: logstash
-    restart: always
-    volumes:
-      - ./logstash:/usr/share/logstash/pipeline/
-      - //etc/localtime:/etc/localtime:ro # Windows WSL
-      - //etc/timezone:/etc/timezone:ro # Windows WSL
-    ports:
-      - 9600:9600  
-      - 8089:8089  
-    depends_on:
-      elasticsearch:
-        condition: service_healthy
-  
-  filebeat:
-    image: docker.elastic.co/beats/filebeat:${ELASTIC_VERSION}
-    container_name: filebeat
-    restart: always
-    volumes: 
-      - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
-      - //var/run/docker.sock:/var/run/docker.sock:ro # Windows WSL
-      # - //var/lib/docker:/var/lib/docker/containers:ro # Windows WSL
-      - //etc/localtime:/etc/localtime:ro # Windows WSL
-      - //etc/timezone:/etc/timezone:ro # Windows WSL
-      - filebeatdrive:/usr/share/filebeat/modules.d
-    depends_on:
-      elasticsearch:
-        condition: service_healthy
-
   apm-server:
     image: docker.elastic.co/apm/apm-server:${ELASTIC_VERSION}
     container_name: apm-server
