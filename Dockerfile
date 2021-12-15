@@ -1,4 +1,4 @@
-FROM node:carbon
+FROM node:14-slim
 
 LABEL maintainer="Ismael Alves <cearaismael1997@gmail.com>"
 WORKDIR /app
