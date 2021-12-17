@@ -5,8 +5,8 @@ metadata:
   name: "{{ .name }}-job"
   {{- if .namespace }}
   namespace: {{ .namespace }}
-  {{ else if $.Values.namespace }}
-  namespace: {{ $.Values.namespace }}
+  {{ else if or $.Values.namespace $.Release.Namespace }}
+  namespace: {{ or $.Values.namespace $.Release.Namespace }}
   {{- end }}
   labels:
     {{- if .labels.jobgroup }}

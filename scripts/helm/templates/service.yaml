@@ -3,8 +3,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ template "service.fullname" . }}
-  {{- if .Values.namespace }}
-  namespace: {{ .Values.namespace }}
+  {{- if or .Values.namespace .Release.Namespace }}
+  namespace: {{ or .Values.namespace .Release.Namespace }}
   {{- end}}
 spec:
   selector: {{ include "service.labels" . | nindent 4 }}
