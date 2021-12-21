@@ -10,6 +10,7 @@ services:
       NODE_ENV: production
       DB_HOST: mysql1
       DB_PORT: 3306
+      JAEGER_ENDPOINT: http://jaeger:14268/api/traces
     volumes:  
       - //etc/localtime:/etc/localtime:ro # Windows WSL
       - //etc/timezone:/etc/timezone:ro # Windows WSL
@@ -17,7 +18,23 @@ services:
       - 3000:3000
     depends_on: 
       - 'mysql'
+  jaeger:
+    image: jaegertracing/all-in-one
+    container_name: jaeger
+    restart: always
+    environment:
+      - COLLECTOR_ZIPKIN_HOST_PORT=:9411
+    ports:
+      - "5775:5775/udp"
+      - "6831:6831/udp"
+      - "6832:6832/udp"
+      - "5778:5778"
+      - "16686:16686"
+      - "14268:14268"
+      - "9411:9411"
       
+    depends_on: 
+      - 'backend'
   phpmyadmin:
     image: phpmyadmin
     container_name: phpmyadmin

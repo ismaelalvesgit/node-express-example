@@ -40,6 +40,14 @@ export default {
         port: parseInt(process.env.REDIS_PORT || "6379"),
         prefix: process.env.REDIS_PREFIX || "example" 
     },
+    jaeger:{
+        host: process.env.JAEGER_AGENT_HOST,
+        collectorEndpoint: process.env.JAEGER_ENDPOINT,
+        port: parseInt(process.env.JAEGER_AGENT_PORT || "6831"),
+        serviceName: process.env.JAEGER_SERVICE_NAME || "express-example",
+        param: parseInt(process.env.JAEGER_SAMPLER_PARAM || "1"),
+        type: process.env.JAEGER_SAMPLER_TYPE || "const",
+    },
     apm:{
         serverUrl: process.env.APM_SERVER_URL,
         serviceName: process.env.APM_SERVICE_NAME,
