@@ -90,14 +90,12 @@
         "http-status-codes": "^2.1.4",
         "i18n": "^0.13.3",
         "ioredis": "^4.28.2",
-        "jaeger-client": "^3.19.0",
         "knex": "^0.95.14",
         "morgan": "^1.10.0",
         "mv": "^2.1.1",
         "mysql2": "^2.3.3",
         "node-cache": "^5.1.2",
         "nodemailer": "^6.7.2",
-        "npm": "^7.24.2",
         "prom-client": "^13.2.0",
         "ramda": "^0.27.1",
         "response-time": "^2.3.2",
@@ -113,7 +111,10 @@
         "winston": "^3.3.3",
         "winston-daily-rotate-file": "^4.5.5",
         "x-xss-protection": "^2.0.0",
-        "yamljs": "^0.3.0"
+        "yamljs": "^0.3.0",
+        "zipkin": "^0.22.0",
+        "zipkin-instrumentation-express": "^0.22.0",
+        "zipkin-transport-http": "^0.22.0"
     },
     "devDependencies": {
         "@babel/cli": "^7.16.0",

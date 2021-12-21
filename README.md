@@ -40,7 +40,7 @@ Feramentas Utilizadas:
 * [exceljs](https://www.npmjs.com/package/exceljs)
 * [docx](https://www.npmjs.com/package/docx)
 * [html-pdf](https://www.npmjs.com/package/html-pdf)
-* [jaeger-client-node](https://www.npmjs.com/package/jaeger-client-node)
+* [zipkin](https://www.npmjs.com/package/zipkin)
 * [socket.io](https://socket.io/)
 * [nodemon](https://nodemon.io/)
 

@@ -15,8 +15,8 @@ import YAML from "yamljs";
 import { readFileSync } from "fs";
 const swaggerDocument = YAML.load("./doc/swagger.yml");
 import logger from "./logger";
+import zipkinMiddleware from "./zipkin";
 import uuidMiddleware from "./middleware/uuidMiddleware";
-import tracingMiddleware from "./middleware/tracingMiddleware";
 import systemRouter from "./routes/system.routes";
 import contatoRouter from "./routes/contatos.routes";
 import env from "./env";
@@ -66,7 +66,7 @@ app.use(responseCounters);
 app.use(requestCounters);
 app.use(responseTime());
 app.use(uuidMiddleware);
-app.use(tracingMiddleware);
+app.use(zipkinMiddleware);
 app.use(i18n.init);
 
 /** Engine View */
