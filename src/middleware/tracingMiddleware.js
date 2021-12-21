@@ -1,6 +1,6 @@
-import { opentracing } from 'jaeger-client';
-import jeagerClient from '../jaeger';
-import env from '../env';
+import { opentracing } from "jaeger-client";
+import jeagerClient from "../jaeger";
+import env from "../env";
 
 /**
  * @param req {import('express').Request}
@@ -16,15 +16,15 @@ export default (req, res, next)=>{
             [opentracing.Tags.HTTP_METHOD]: req.method,
             [opentracing.Tags.HTTP_URL]: req.path
         });
-        res.endResponse = res.end
+        res.endResponse = res.end;
         res.end = (chunk, encoding)=>{
             span.setTag(opentracing.Tags.HTTP_STATUS_CODE, res.statusCode);
             span.finish();
             res.end = res.endResponse;
-            res.end(chunk, encoding)
-        }
+            res.end(chunk, encoding);
+        };
         return next();
     }else{
         return next();
     }
-}
+};

@@ -1,6 +1,6 @@
-import { initTracer } from 'jaeger-client'
-import env from './env';
-import logger from './logger'
+import { initTracer } from "jaeger-client";
+import env from "./env";
+import logger from "./logger";
 
 /** @type {import('jaeger-client').JaegerTracer} */
 let jeagerClient;
@@ -20,10 +20,10 @@ if (env.jaeger.host) {
         }
     }, {
         tags: {
-            'express-example.version': '0.0.1'
+            "express-example.version": "0.0.1"
         },
         logger: logger,
-    })
+    });
 }
 
-export default jeagerClient
+export default jeagerClient;

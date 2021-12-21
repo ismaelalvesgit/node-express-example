@@ -72,7 +72,7 @@ export const generateZIP = async(pathOrigin, pathDestination, type, fileName = "
                 throw new Error("Type SpreadSheet not implemented");
                 // logger.debug(fs.createWriteStream(pathOrigin));
                 // zip.append(fs.createWriteStream(pathOrigin), {name: fileName})
-                break;
+                // break;
             case "folder": 
                 zip.directory(pathOrigin, "files", {date: new Date()});
                 break;
