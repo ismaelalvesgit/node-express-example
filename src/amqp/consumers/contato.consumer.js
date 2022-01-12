@@ -89,7 +89,7 @@ export class ContactConsumer {
         const data = msg.content;
         await contatoService.createContact(data).then((result)=>{
             if(!result.length){
-                throw new AmqpError("Fallha ao criar contato");
+                throw new AmqpError({message: "Fallha ao criar contato"});
             }
         }).catch((e)=> {
             throw new AmqpError(e);

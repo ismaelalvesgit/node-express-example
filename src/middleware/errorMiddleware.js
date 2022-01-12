@@ -1,31 +1,59 @@
-import { AmqpError, ApiError, EmailError, UploadError, ValidadeSchema } from "../utils/erro";
+import { 
+    AmqpError, 
+    ApiError, 
+    BadRequest, 
+    EmailError, 
+    InternalServer, 
+    NotFound, 
+    UploadError, 
+    ValidadeSchema 
+} from "../utils/erro";
 import { StatusCodes } from "http-status-codes";
 import logger from "../logger";
 import elasticAgent from "../apm";
-import env from "../env";
 
 /**
  * @typedef ErrorConfig
  * @type {Object}
  * @property {typeof CodedError} class
+ * @property {string} code
  * @property {String} i18n
  */
 
 /**
  * @type {ErrorConfig[]}
  */
-const errorsConfigs = [
-    { class: ApiError, i18n: "error.apiError" },
-    { class: ValidadeSchema, i18n: "error.validadeSchema" },
-    { class: AmqpError, i18n: "error.amqpError"},
-    { class: UploadError, i18n: "error.uploadError"},
-    { class: EmailError, i18n: "error.emailError"},
+ const errorsConfigs = [
+    { class: EmailError, code: "email", i18n: "EmailError.email" },
+    { class: AmqpError, code: "Contact", i18n: "AmqpError.Contact" },
+    { class: AmqpError, code: "amqp", i18n: "AmqpError" },
+
+    { class: NotFound, code: null, i18n: "NotFound" },
+
+    { class: BadRequest, code: "Contact", i18n: "BadRequest.Contact" },
+
+    { class: InternalServer, code: "Contact", i18n: "InternalServer.Contact" },
+    { class: Error, code: "ER_DUP_ENTRY", i18n: "BadRequest.Duplicate"},
+
+    { class: ValidadeSchema, code: "any.required", i18n: "ValidadeSchema.required" },
+    { class: ValidadeSchema, code: "any.only", i18n: "ValidadeSchema.only" },
+    { class: ValidadeSchema, code: "string.min", i18n: "ValidadeSchema.min" },
+    { class: ValidadeSchema, code: "string.email", i18n: "ValidadeSchema.email" },
+    { class: ValidadeSchema, code: "async.exist", i18n: "ValidadeSchema.async" },
 ];
 
 /**
  * @param {Error} error
  */
-const _getErrorConfig = error => errorsConfigs.find(errorConfig => error instanceof errorConfig.class);
+const _getErrorConfig = error => errorsConfigs.find((errorConfig)=>{
+    if(error instanceof NotFound && error instanceof errorConfig.class){
+        return errorConfig;
+    }else{
+        if(error instanceof errorConfig.class && (error._code === errorConfig.code || error.code === errorConfig.code)){
+            return errorConfig;
+        }
+    }
+});
 
 /**
  * @param {import('express').Request} req
@@ -33,16 +61,53 @@ const _getErrorConfig = error => errorsConfigs.find(errorConfig => error instanc
  */
 /* eslint-disable no-unused-vars*/
 const _loadErrorMessage = (req, error) => {
-    const errorConfig = _getErrorConfig(error);
-    if (errorConfig) {
-      const errorWithMessage = error;
-      errorWithMessage.message = req.__(errorConfig.i18n);
+    if(error instanceof ValidadeSchema){
+        error.message = JSON.stringify(
+            JSON.parse(error.message).map(element => {
+                let e = error;
+                e._code = element.type;
+                const errorConfig = _getErrorConfig(e);
+                if(errorConfig){
+                    element.message = req.__(errorConfig.i18n, {
+                        name: element.context.key,
+                        limit: element.context.limit,
+                        value: element.context.value,
+                        valids: element.context.valids,
+                        code: error._code
+                    });
+                    return element;
+                }
+                return element;
+            })
+        );
+      }else{
+        const errorConfig = _getErrorConfig(error);
+        if (errorConfig) {
+            const errorWithMessage = error;
+            let data = {};
+            switch (error.code) {
+                case "ER_DUP_ENTRY":
+                    data.dup = error.sqlMessage.split(/'(.*?)'/)[1];
+                    break;
+                default:
+                    break;
+            }
+            errorWithMessage.message = req.__(errorConfig.i18n, {
+                params: req.params,
+                query: req.query,
+                headers: req.headers,
+                body: req.body,
+                code: error._code,
+                duplicateValue: data.dup
+            });
+        }
     }
 };
 
 /* eslint-disable no-unused-vars*/
 export default function errorHandler(error, req, res, next) {
     logger.warn(`${req.id} ${error.message}`);
+    _loadErrorMessage(req, error);
     switch (error.constructor) {
         case ApiError: {
             res.status(error.statusCode).json([{message: error.message}]);
@@ -72,9 +137,9 @@ export default function errorHandler(error, req, res, next) {
         }
         default: {
             if(error.code){
-                res.status(StatusCodes.BAD_REQUEST).json([{message: error.sqlMessage}]);
+                res.status(StatusCodes.BAD_REQUEST).json([{message: error.message || error.sqlMessage}]);
             }else{
-                if(env.apm.serviceName){
+                if(elasticAgent){
                     elasticAgent.captureError(error);
                 }
                 logger.error(`${req.id} ${error.message}`);

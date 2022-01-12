@@ -17,6 +17,7 @@ const swaggerDocument = YAML.load("./doc/swagger.yml");
 import logger from "./logger";
 import zipkinMiddleware from "./zipkin";
 import uuidMiddleware from "./middleware/uuidMiddleware";
+import changeLocaleMiddleware from "./middleware/changeLocaleMiddleware";
 import systemRouter from "./routes/system.routes";
 import contatoRouter from "./routes/contatos.routes";
 import env from "./env";
@@ -68,6 +69,7 @@ app.use(responseTime());
 app.use(uuidMiddleware);
 app.use(zipkinMiddleware);
 app.use(i18n.init);
+app.use(changeLocaleMiddleware);
 
 /** Engine View */
 app.set("view engine", "ejs");

@@ -1,5 +1,4 @@
 import { ValidadeSchema } from "../utils/erro";
-import { StatusCodes } from "http-status-codes";
 /**
  * 
 *  @param {import('@hapi/joi').AnySchema} schema 
@@ -14,7 +13,7 @@ export default function verifyHandlerMiddleware(schema){
         });
 
         if (validation.error) {
-            return next(new ValidadeSchema(StatusCodes.BAD_REQUEST, validation.error.details));
+            return next(new ValidadeSchema(validation.error.details));
         }
 
         Object.assign(req, validation.value);

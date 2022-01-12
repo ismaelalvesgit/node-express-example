@@ -1,7 +1,7 @@
-import { Tracer, ExplicitContext, BatchRecorder, jsonEncoder } from 'zipkin';
-import { HttpLogger } from 'zipkin-transport-http';
-import { expressMiddleware } from 'zipkin-instrumentation-express';
-import env from './env'
+import { Tracer, ExplicitContext, BatchRecorder, jsonEncoder } from "zipkin";
+import { HttpLogger } from "zipkin-transport-http";
+import { expressMiddleware } from "zipkin-instrumentation-express";
+import env from "./env";
 
 const tracer = new Tracer({
     ctxImpl: new ExplicitContext(),

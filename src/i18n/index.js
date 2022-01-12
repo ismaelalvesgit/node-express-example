@@ -2,6 +2,7 @@ import path from "path";
 import { I18n } from "i18n";
 import logger from "../logger";
 import elasticAgent from "../apm";
+import env from "../env";
 
 const i18n = new I18n();
 i18n.configure({
@@ -17,8 +18,10 @@ i18n.configure({
     directory: path.join(__dirname, "locales"),
     directoryPermissions: "755",
     register: global,
-    autoReload: true,
+    autoReload: env.env !== "test",
     extension: ".json",
+    queryParameter: "lang",
+    header: "accept-language",
     logErrorFn: (msg)=>{
         if(elasticAgent){
             elasticAgent.captureError(msg);

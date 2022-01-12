@@ -1,3 +1,19 @@
 {
-    "error.apiError": "hello %s"
+	"ServiceUnavailable.router": "Route is yet to be configured",
+	"ServiceUnavailable.throttling": "Request limit reached 😅, wait a while and try again 😇",
+    "NotFound": "{{code}} not found",
+    "BadRequest.Contact":"Fail to create Contact",
+    "BadRequest.Duplicate":"Unique value already registered '{{duplicateValue}}'",
+	"Contact.create": "Contact Created",
+	"Contact.update": "Contact update sucess",
+    "ValidadeSchema.required":"{{name}} is required",
+	"ValidadeSchema.min": "{{name}} length must be at least {{limit}} characters long",
+	"ValidadeSchema.email": "{{name}} must be a valid email",
+	"ValidadeSchema.only": "{{name}} must be one of {{valids}}",
+	"ValidadeSchema.async": "{{name}} not exist",
+    "EmailError.email": "Failed to try to send email",
+	"InternalServer":"Contact the developer and give me your ID {{id}}, we're sorry this happened 😞",
+	"Contact.amqp": "Message published in the queue",
+	"AmqpError": "Failed to publish message to queue",
+	"AmqpError.Contact": "Fail to create Contact"
 }

@@ -1,3 +1,19 @@
 {
-	"error.apiError": "oi %s"
+	"ServiceUnavailable.router": "A rota ainda não foi configurada",
+	"ServiceUnavailable.throttling": "Limite de solicitação atingido 😅, aguarde um pouco e tente novamente 😇",
+	"NotFound": "{{code}} não encontrado",
+	"BadRequest.Contact": "Falha ao criar um novo contato",
+	"BadRequest.Duplicate": "Valor único já cadastrado '{{duplicateValue}}'",
+	"Contact.create": "Contato criado com sucesso!!!",
+	"Contact.update": "Contato atualizado com sucesso!!!",
+	"ValidadeSchema.required": "{{name}} e obrigátorio",
+	"ValidadeSchema.min": "{{name}} deve ser pelo menos {{limit}} caracteres",
+	"ValidadeSchema.email": "{{name}} deve ser um email válido",
+	"ValidadeSchema.only": "{{name}} deve ser um de {{valids}}",
+	"ValidadeSchema.async": "{{name}} não existe em nossa base",
+	"EmailError.email": "Falha ao tentar envia email",
+	"InternalServer": "Entre em contato com o desenvolvedor passe eu seu ID {{id}}, lamentamos isso ter ocorrido 😞",
+	"Contact.amqp": "Messagem públicado na fila",
+	"AmqpError": "Falha ao públicar a messagem na fila",
+	"AmqpError.Contact": "Falha ao Criar novo contato"
 }
